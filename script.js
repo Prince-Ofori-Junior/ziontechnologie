@@ -1,866 +1,406 @@
-
-/* =========================================================
-   ZION TECHNOLOGIE GHANA
-   E-COMMERCE WEBSITE — MAIN JAVASCRIPT
-   Compatible with:
-   index.html
-   style.css
-   Responsive: Mobile / Tablet / Desktop
-
-   Features:
-   - Product filtering and search
-   - Product sorting
-   - Shopping cart with localStorage
-   - WhatsApp checkout
-   - Service booking
-   - Mobile navigation
-   - Contact links
-   - Toast notifications
-========================================================= */
-
-
-/* =========================================================
-   01. BUSINESS CONFIGURATION
-========================================================= */
+/* ZION TECHNOLOGIE — SHOP SCRIPT v2
+   Adds: checkout form, delivery/pickup, promo codes, delivery fee,
+   wishlist ("Saved" filter), stock limits, order references + history,
+   empty-search message. Works with your existing index.html. */
 
 const ZION_CONFIG = {
   whatsappNumber: "233244244529",
-  email: "ziontechnologies@gmail.com"
+  email: "ziontechnologies@gmail.com",
+  deliveryFee: 30,            // GH₵, estimate – confirmed by the team
+  freeDeliveryOver: 1500,     // free delivery above this subtotal (0 = off)
+  maxQty: 10,
+  promos: {                   // edit or remove codes here
+    ZION5:     { type: "percent", value: 5,  label: "5% off" },
+    WELCOME50: { type: "flat",    value: 50, label: "GH₵ 50 off" }
+  }
 };
 
-
-/* =========================================================
-   02. GLOBAL HELPERS
-========================================================= */
-
+/* ---------- helpers ---------- */
 const $ = id => document.getElementById(id);
-
-const money = value => {
-  return new Intl.NumberFormat("en-GH", {
-    style: "currency",
-    currency: "GHS",
-    minimumFractionDigits: 2
-  })
-    .format(Number(value) || 0)
-    .replace("GHS", "GH₵");
+const money = v => new Intl.NumberFormat("en-GH", { style: "currency", currency: "GHS", minimumFractionDigits: 2 })
+  .format(Number(v) || 0).replace("GHS", "GH₵");
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[c]);
+const store = {
+  get(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { toast("Could not save data on this device"); } }
 };
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[char]);
+function waNumber() {
+  const raw = String(ZION_CONFIG.whatsappNumber || "").trim();
+  if (!raw || /x/i.test(raw)) return "";
+  const n = raw.replace(/\D/g, "");
+  return n.length >= 10 && n.length <= 15 ? n : "";
+}
+function localDate() {
+  const p = {};
+  new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Accra", year: "numeric", month: "2-digit", day: "2-digit" })
+    .formatToParts(new Date()).forEach(x => p[x.type] = x.value);
+  return `${p.year}-${p.month}-${p.day}`;
 }
 
-function getWhatsAppNumber() {
-  const rawNumber = String(ZION_CONFIG.whatsappNumber || "").trim();
+/* ---------- DOM ---------- */
+const productGrid = $("productGrid"), cartCount = $("cartCount"), cartItems = $("cartItems"),
+  cartTotal = $("cartTotal"), drawer = $("cartDrawer"), backdrop = $("cartBackdrop"),
+  toastEl = $("toast"), searchPanel = $("searchPanel"), searchInput = $("searchInput"),
+  mainNav = $("mainNav"), menuToggle = $("menuToggle"), bookingForm = $("bookingForm");
+const cards = productGrid ? [...productGrid.querySelectorAll(".product-card")] : [];
 
-  // Reject placeholder numbers before removing non-digit characters.
-  if (!rawNumber || /[xX]/.test(rawNumber)) return "";
+/* ---------- products ---------- */
+const products = Object.fromEntries(cards.filter(c => c.dataset.id).map(c => {
+  const img = c.querySelector(".product-image img");
+  const stock = c.dataset.stock === undefined ? Infinity : Number(c.dataset.stock);
+  return [c.dataset.id, {
+    id: c.dataset.id, name: c.dataset.name || "Product", category: c.dataset.category || "Other",
+    price: Number(c.dataset.price) || 0, image: img ? img.currentSrc || img.src : "",
+    stock: Number.isFinite(stock) ? stock : Infinity
+  }];
+}));
+const maxFor = p => Math.min(ZION_CONFIG.maxQty, p.stock);
 
-  const number = rawNumber.replace(/\D/g, "");
-
-  if (number.length < 10 || number.length > 15) return "";
-
-  return number;
-}
-
-function getLocalDate() {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Africa/Accra",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).formatToParts(new Date());
-
-  const date = {};
-
-  parts.forEach(part => {
-    date[part.type] = part.value;
-  });
-
-  return `${date.year}-${date.month}-${date.day}`;
-}
-
-
-/* =========================================================
-   03. DOM ELEMENTS
-========================================================= */
-
-const productGrid = $("productGrid");
-const cartCount = $("cartCount");
-const cartItems = $("cartItems");
-const cartTotal = $("cartTotal");
-
-const drawer = $("cartDrawer");
-const backdrop = $("cartBackdrop");
-const toast = $("toast");
-
-const searchPanel = $("searchPanel");
-const searchInput = $("searchInput");
-
-const mainNav = $("mainNav");
-const menuToggle = $("menuToggle");
-
-const bookingForm = $("bookingForm");
-const bookingDate = $("bookingDate");
-
-const contactWhatsapp = $("contactWhatsapp");
-const contactEmail = $("contactEmail");
-const footerEmail = $("footerEmail");
-
-const productCards = productGrid
-  ? [...productGrid.querySelectorAll(".product-card")]
-  : [];
-
-
-/* =========================================================
-   04. PRODUCT DATA
-========================================================= */
-
-const products = Object.fromEntries(
-  productCards
-    .filter(card => card.dataset.id)
-    .map(card => {
-      const image = card.querySelector(".product-image img");
-
-      return [
-        card.dataset.id,
-        {
-          id: card.dataset.id,
-          name: card.dataset.name || "Unnamed product",
-          category: card.dataset.category || "Other",
-          price: Number(card.dataset.price) || 0,
-          image: image ? image.currentSrc || image.src : ""
-        }
-      ];
-    })
-);
-
-
-/* =========================================================
-   05. SHOPPING CART STORAGE
-========================================================= */
-
+/* ---------- state ---------- */
 let cart = {};
+const saved = store.get("ZionGhanaCart", {});
+Object.entries(saved && typeof saved === "object" ? saved : {}).forEach(([id, q]) => {
+  q = Math.floor(Number(q));
+  if (products[id] && q > 0) cart[id] = Math.min(q, maxFor(products[id]));
+});
+let wishlist = (store.get("ZionWishlist", []) || []).filter(id => products[id]);
+let promoCode = store.get("ZionPromo", "");
+let customer = store.get("ZionCustomer", { name: "", phone: "", method: "Delivery", location: "", payment: "Mobile Money", note: "" });
+let activeFilter = "All", searchTerm = "";
 
-try {
-  const savedCart = JSON.parse(
-    localStorage.getItem("ZionGhanaCart") || "{}"
-  );
-
-  if (
-    savedCart &&
-    typeof savedCart === "object" &&
-    !Array.isArray(savedCart)
-  ) {
-    Object.entries(savedCart).forEach(([id, quantity]) => {
-      const validQuantity = Math.floor(Number(quantity));
-
-      if (
-        products[id] &&
-        Number.isFinite(validQuantity) &&
-        validQuantity > 0
-      ) {
-        cart[id] = validQuantity;
-      }
-    });
-  }
-} catch {
-  cart = {};
-}
-
-let activeFilter = "All";
-let searchTerm = "";
-
-
-/* =========================================================
-   06. TOAST NOTIFICATIONS
-========================================================= */
-
+/* ---------- toast ---------- */
 let toastTimer;
+function toast(msg) {
+  if (!toastEl) return console.info(msg);
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2300);
+}
 
-function showToast(message) {
-  if (!toast) {
-    console.info(message);
-    return;
+/* ---------- totals ---------- */
+const qtyTotal = () => Object.values(cart).reduce((s, q) => s + q, 0);
+const subtotal = () => Object.entries(cart).reduce((s, [id, q]) => s + products[id].price * q, 0);
+function totals() {
+  const sub = subtotal();
+  const promo = ZION_CONFIG.promos[promoCode];
+  let discount = 0;
+  if (promo) discount = promo.type === "percent" ? sub * promo.value / 100 : Math.min(promo.value, sub);
+  const after = sub - discount;
+  const free = ZION_CONFIG.freeDeliveryOver && after >= ZION_CONFIG.freeDeliveryOver;
+  const delivery = customer.method === "Delivery" && sub > 0 && !free ? ZION_CONFIG.deliveryFee : 0;
+  return { sub, discount, delivery, free, total: after + delivery, promo };
+}
+function persistCart() { store.set("ZionGhanaCart", cart); renderCart(); }
+
+/* ---------- inject extra UI (no HTML edits needed) ---------- */
+const footer = drawer?.querySelector(".cart-footer");
+if (footer) {
+  const totalRow = footer.querySelector(".cart-total");
+  totalRow.querySelector("span").textContent = "Estimated total";
+  const box = document.createElement("div");
+  box.className = "co-box";
+  box.innerHTML = `
+    <div class="co-promo">
+      <input id="promoInput" placeholder="Promo code" autocomplete="off" aria-label="Promo code">
+      <button type="button" id="promoBtn">Apply</button>
+    </div>
+    <div class="co-summary" id="coSummary"></div>
+    <details class="co-details" open>
+      <summary>Your details</summary>
+      <div class="co-grid">
+        <input id="coName" placeholder="Full name *" autocomplete="name">
+        <input id="coPhone" type="tel" placeholder="Phone number *" autocomplete="tel">
+        <select id="coMethod" aria-label="Delivery method">
+          <option>Delivery</option><option>Pickup</option>
+        </select>
+        <select id="coPayment" aria-label="Payment preference">
+          <option>Mobile Money</option><option>Cash on delivery</option><option>Bank transfer</option>
+        </select>
+        <input id="coLocation" class="co-wide" placeholder="Delivery town / area *" autocomplete="street-address">
+        <input id="coNote" class="co-wide" placeholder="Order note (optional)">
+      </div>
+    </details>`;
+  footer.insertBefore(box, totalRow);
+  const clear = document.createElement("button");
+  clear.type = "button"; clear.id = "clearCart"; clear.className = "co-clear"; clear.textContent = "Clear cart";
+  footer.appendChild(clear);
+
+  $("coName").value = customer.name; $("coPhone").value = customer.phone;
+  $("coMethod").value = customer.method; $("coPayment").value = customer.payment;
+  $("coLocation").value = customer.location; $("coNote").value = customer.note;
+  $("promoInput").value = promoCode;
+}
+function readCustomer() {
+  customer = {
+    name: $("coName").value.trim(), phone: $("coPhone").value.trim(),
+    method: $("coMethod").value, payment: $("coPayment").value,
+    location: $("coLocation").value.trim(), note: $("coNote").value.trim()
+  };
+  store.set("ZionCustomer", customer);
+  const loc = $("coLocation");
+  loc.hidden = customer.method === "Pickup";
+}
+
+/* wishlist hearts + stock state on each card */
+cards.forEach(card => {
+  const p = products[card.dataset.id];
+  if (!p) return;
+  const wrap = card.querySelector(".product-image");
+  const h = document.createElement("button");
+  h.type = "button"; h.className = "wish-btn"; h.dataset.wish = p.id;
+  wrap.appendChild(h);
+  if (p.stock <= 0) {
+    const b = card.querySelector(".add-cart");
+    b.disabled = true; b.textContent = "Out of stock";
+    card.classList.add("sold-out");
   }
+});
+const filtersBox = $("filterList");
+if (filtersBox) {
+  const chip = document.createElement("button");
+  chip.className = "filter-chip"; chip.type = "button"; chip.dataset.filter = "Saved"; chip.id = "savedChip";
+  filtersBox.appendChild(chip);
+}
+const emptyMsg = document.createElement("p");
+emptyMsg.className = "no-results"; emptyMsg.hidden = true;
+emptyMsg.textContent = "No products match your search or filter. Try another word or choose All products.";
+productGrid?.after(emptyMsg);
 
-  toast.textContent = message;
-  toast.classList.add("show");
-
-  window.clearTimeout(toastTimer);
-
-  toastTimer = window.setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2300);
+function renderWishlist() {
+  document.querySelectorAll(".wish-btn").forEach(b => {
+    const on = wishlist.includes(b.dataset.wish);
+    b.classList.toggle("on", on);
+    b.textContent = on ? "♥" : "♡";
+    b.setAttribute("aria-pressed", on);
+    b.setAttribute("aria-label", (on ? "Remove from" : "Save to") + " wishlist: " + products[b.dataset.wish].name);
+  });
+  const chip = $("savedChip");
+  if (chip) chip.textContent = `♥ Saved (${wishlist.length})`;
+}
+function toggleWish(id) {
+  if (!products[id]) return;
+  const i = wishlist.indexOf(id);
+  i > -1 ? wishlist.splice(i, 1) : wishlist.push(id);
+  store.set("ZionWishlist", wishlist);
+  renderWishlist();
+  toast(i > -1 ? "Removed from saved items" : "Saved for later");
+  if (activeFilter === "Saved") applyFilters();
 }
 
-
-/* =========================================================
-   07. CART CALCULATIONS
-========================================================= */
-
-function cartQuantity() {
-  return Object.values(cart).reduce(
-    (sum, quantity) => sum + quantity,
-    0
-  );
-}
-
-function cartSubtotal() {
-  return Object.entries(cart).reduce((sum, [id, quantity]) => {
-    return sum + (products[id]?.price || 0) * quantity;
-  }, 0);
-}
-
-function saveCart() {
-  try {
-    localStorage.setItem(
-      "ZionGhanaCart",
-      JSON.stringify(cart)
-    );
-  } catch {
-    showToast("Unable to save your cart on this device");
-  }
-
-  renderCart();
-}
-
-
-/* =========================================================
-   08. RENDER SHOPPING CART
-========================================================= */
-
+/* ---------- render cart ---------- */
 function renderCart() {
-  const quantity = cartQuantity();
-  const subtotal = cartSubtotal();
+  const t = totals();
+  if (cartCount) { cartCount.textContent = qtyTotal(); cartCount.setAttribute("aria-label", qtyTotal() + " items in cart"); }
+  if (cartTotal) cartTotal.textContent = money(t.total);
 
-  if (cartCount) {
-    cartCount.textContent = quantity;
-    cartCount.setAttribute("aria-label", `${quantity} items in cart`);
+  const sum = $("coSummary");
+  if (sum) {
+    sum.innerHTML = `
+      <div><span>Subtotal</span><b>${money(t.sub)}</b></div>
+      ${t.discount ? `<div class="good"><span>Promo ${esc(promoCode)} (${esc(t.promo.label)})</span><b>−${money(t.discount)}</b></div>` : ""}
+      <div><span>${customer.method === "Pickup" ? "Pickup" : "Delivery (estimate)"}</span><b>${t.free ? "Free" : money(t.delivery)}</b></div>`;
+    sum.hidden = !t.sub;
   }
-
-  if (cartTotal) {
-    cartTotal.textContent = money(subtotal);
-  }
+  const hasItems = t.sub > 0;
+  footer?.querySelectorAll(".co-box, .co-clear, .checkout-btn").forEach(el => el.hidden = !hasItems);
+  readCustomer();
 
   if (!cartItems) return;
-
-  const entries = Object.entries(cart).filter(
-    ([id, quantity]) => products[id] && quantity > 0
-  );
-
+  const entries = Object.entries(cart);
   if (!entries.length) {
-    cartItems.innerHTML = `
-      <div class="empty-cart">
-        <span>＋</span>
-        <h4>Your cart is empty</h4>
-        <p>Add equipment to start your order.</p>
-      </div>
-    `;
-
+    cartItems.innerHTML = `<div class="empty-cart"><span>＋</span><h4>Your cart is empty</h4><p>Add equipment to start your order.</p></div>`;
     return;
   }
-
-  cartItems.innerHTML = entries.map(([id, quantity]) => {
-    const product = products[id];
-
+  cartItems.innerHTML = entries.map(([id, q]) => {
+    const p = products[id], atMax = q >= maxFor(p);
     return `
-      <div class="cart-item">
-
-        <div class="cart-item-image">
-          ${
-            product.image
-              ? `
-                <img
-                  src="${escapeHTML(product.image)}"
-                  alt="${escapeHTML(product.name)}"
-                  loading="lazy"
-                >
-              `
-              : ""
-          }
+    <div class="cart-item">
+      <div class="cart-item-image">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">` : ""}</div>
+      <div class="cart-item-details">
+        <h4>${esc(p.name)}</h4>
+        <small>${money(p.price)} each</small>
+        <div class="qty-controls">
+          <button type="button" data-action="decrease" data-id="${esc(id)}" aria-label="Decrease quantity of ${esc(p.name)}">−</button>
+          <b>${q}</b>
+          <button type="button" data-action="increase" data-id="${esc(id)}" ${atMax ? "disabled" : ""} aria-label="Increase quantity of ${esc(p.name)}">+</button>
         </div>
-
-        <div class="cart-item-details">
-
-          <h4>${escapeHTML(product.name)}</h4>
-
-          <small>${money(product.price)} each</small>
-
-          <div class="qty-controls">
-
-            <button
-              type="button"
-              data-action="decrease"
-              data-id="${escapeHTML(id)}"
-              aria-label="Decrease quantity of ${escapeHTML(product.name)}"
-            >−</button>
-
-            <b>${quantity}</b>
-
-            <button
-              type="button"
-              data-action="increase"
-              data-id="${escapeHTML(id)}"
-              aria-label="Increase quantity of ${escapeHTML(product.name)}"
-            >+</button>
-
-          </div>
-
-        </div>
-
-        <div class="cart-item-side">
-
-          <strong>${money(product.price * quantity)}</strong>
-
-          <button
-            class="remove-item"
-            type="button"
-            data-action="remove"
-            data-id="${escapeHTML(id)}"
-          >Remove</button>
-
-        </div>
-
       </div>
-    `;
+      <div class="cart-item-side">
+        <strong>${money(p.price * q)}</strong>
+        <button class="remove-item" type="button" data-action="remove" data-id="${esc(id)}">Remove</button>
+      </div>
+    </div>`;
   }).join("");
 }
 
-
-/* =========================================================
-   09. CART OPERATIONS
-========================================================= */
-
+/* ---------- cart operations ---------- */
 function addToCart(id) {
-  if (!products[id]) {
-    showToast("This product is currently unavailable");
-    return;
-  }
-
+  const p = products[id];
+  if (!p || p.stock <= 0) return toast("This product is out of stock");
+  if ((cart[id] || 0) >= maxFor(p)) return toast(`Maximum of ${maxFor(p)} per order for this item`);
   cart[id] = (cart[id] || 0) + 1;
-
-  saveCart();
-
-  showToast(`${products[id].name} added to your cart`);
+  persistCart();
+  toast(`${p.name} added to your cart`);
 }
-
-function updateQuantity(id, action) {
+function updateQty(id, action) {
   if (!cart[id] || !products[id]) return;
-
-  if (action === "increase") {
-    cart[id] += 1;
-  }
-
-  if (action === "decrease") {
-    cart[id] -= 1;
-  }
-
-  if (action === "remove" || cart[id] <= 0) {
-    delete cart[id];
-  }
-
-  saveCart();
+  if (action === "increase" && cart[id] < maxFor(products[id])) cart[id]++;
+  if (action === "decrease") cart[id]--;
+  if (action === "remove" || cart[id] <= 0) delete cart[id];
+  persistCart();
 }
-
-
-/* =========================================================
-   10. OPEN AND CLOSE CART
-========================================================= */
-
-function openCart() {
-  if (!drawer || !backdrop) return;
-
-  drawer.classList.add("open");
-  backdrop.classList.add("open");
-
-  drawer.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
+function applyPromo() {
+  const code = $("promoInput").value.trim().toUpperCase();
+  if (!code) { promoCode = ""; store.set("ZionPromo", ""); renderCart(); return; }
+  if (!ZION_CONFIG.promos[code]) return toast("That promo code is not valid");
+  promoCode = code; store.set("ZionPromo", code); renderCart();
+  toast("Promo code applied");
 }
+function openCart() { drawer?.classList.add("open"); backdrop?.classList.add("open"); drawer?.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; }
+function closeCart() { drawer?.classList.remove("open"); backdrop?.classList.remove("open"); drawer?.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; }
 
-function closeCart() {
-  if (!drawer || !backdrop) return;
-
-  drawer.classList.remove("open");
-  backdrop.classList.remove("open");
-
-  drawer.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-
-/* =========================================================
-   11. WHATSAPP INTEGRATION
-========================================================= */
-
-function whatsappURL(message) {
-  const number = getWhatsAppNumber();
-
-  if (!number) {
-    showToast("Set a valid Ghana WhatsApp number in script.js");
-    return null;
-  }
-
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
-}
-
+/* ---------- WhatsApp + checkout ---------- */
 function sendWhatsApp(message) {
-  const url = whatsappURL(message);
-
-  if (url) {
-    window.open(url, "_blank", "noopener,noreferrer");
-  }
+  const n = waNumber();
+  if (!n) return toast("Set a valid Ghana WhatsApp number in script.js"), false;
+  window.open(`https://wa.me/${n}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  return true;
 }
-
-
-/* =========================================================
-   12. SHOPPING CART CHECKOUT
-========================================================= */
-
+function validPhone(v) { return v.replace(/\D/g, "").length >= 9; }
 function checkout() {
-  const entries = Object.entries(cart).filter(
-    ([id, quantity]) => products[id] && quantity > 0
-  );
+  const entries = Object.entries(cart);
+  if (!entries.length) return toast("Your cart is empty");
+  readCustomer();
+  const c = customer;
+  if (!c.name) return $("coName").focus(), toast("Please enter your name");
+  if (!validPhone(c.phone)) return $("coPhone").focus(), toast("Please enter a valid phone number");
+  if (c.method === "Delivery" && !c.location) return $("coLocation").focus(), toast("Please enter your delivery location");
 
-  if (!entries.length) {
-    showToast("Your cart is empty");
-    return;
-  }
-
-  const lines = entries.map(([id, quantity]) => {
-    const product = products[id];
-
-    return (
-      `• ${product.name} × ${quantity} — ` +
-      `${money(product.price * quantity)}`
-    );
-  });
-
+  const t = totals();
+  const ref = "ZT-" + localDate().replace(/-/g, "").slice(2) + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+  const lines = entries.map(([id, q]) => `• ${products[id].name} × ${q} — ${money(products[id].price * q)}`);
   const message = [
-    "Hello Zion Technologie Ghana, I would like to place an order:",
-    "",
-    ...lines,
-    "",
-    `Estimated subtotal: ${money(cartSubtotal())}`,
-    "",
-    "Please confirm stock availability, delivery fee and payment details.",
-    "",
-    "Name:",
-    "Town / delivery location:"
-  ].join("\n");
+    `Hello Zion Technologie, I would like to place an order. Ref: ${ref}`, "",
+    ...lines, "",
+    `Subtotal: ${money(t.sub)}`,
+    t.discount ? `Promo ${promoCode}: −${money(t.discount)}` : null,
+    `${c.method === "Pickup" ? "Pickup" : "Delivery (estimate)"}: ${t.free ? "Free" : money(t.delivery)}`,
+    `Estimated total: ${money(t.total)}`, "",
+    `Name: ${c.name}`, `Phone: ${c.phone}`,
+    `Method: ${c.method}`,
+    c.method === "Delivery" ? `Location: ${c.location}` : null,
+    `Payment preference: ${c.payment}`,
+    c.note ? `Note: ${c.note}` : null, "",
+    "Please confirm stock, delivery fee and payment details."
+  ].filter(x => x !== null).join("\n");
 
-  sendWhatsApp(message);
+  if (!sendWhatsApp(message)) return;
+  const orders = store.get("ZionOrders", []);
+  orders.unshift({ ref, date: new Date().toISOString(), items: { ...cart }, total: t.total });
+  store.set("ZionOrders", orders.slice(0, 20));
+  cart = {}; promoCode = ""; $("promoInput").value = "";
+  store.set("ZionPromo", "");
+  persistCart(); closeCart();
+  toast(`Order ${ref} sent. Complete it in WhatsApp.`);
 }
 
-
-/* =========================================================
-   13. PRODUCT SEARCH AND FILTERING
-========================================================= */
-
+/* ---------- filter / search / sort ---------- */
 function applyFilters() {
   const term = searchTerm.toLowerCase();
-
-  productCards.forEach(card => {
-    const category = card.dataset.category || "";
-    const name = card.dataset.name || "";
-
-    const matchesCategory =
-      activeFilter === "All" || category === activeFilter;
-
-    const searchableText = (
-      `${name} ${category} ${card.textContent}`
-    ).toLowerCase();
-
-    const matchesSearch =
-      !term || searchableText.includes(term);
-
-    card.hidden = !(matchesCategory && matchesSearch);
+  let shown = 0;
+  cards.forEach(card => {
+    const okCat = activeFilter === "All" ? true
+      : activeFilter === "Saved" ? wishlist.includes(card.dataset.id)
+      : card.dataset.category === activeFilter;
+    const okSearch = !term || `${card.dataset.name} ${card.dataset.category} ${card.textContent}`.toLowerCase().includes(term);
+    card.hidden = !(okCat && okSearch);
+    if (!card.hidden) shown++;
   });
+  emptyMsg.hidden = shown > 0;
+  if (!shown && activeFilter === "Saved" && !term) emptyMsg.textContent = "You have no saved items yet. Tap the heart on any product to save it.";
+  else emptyMsg.textContent = "No products match your search or filter. Try another word or choose All products.";
 }
-
-function setFilter(category) {
-  if (!category) return;
-
-  activeFilter = category;
-
-  document.querySelectorAll(".filter-chip").forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.dataset.filter === category
-    );
-  });
-
+function setFilter(cat, scroll = true) {
+  if (!cat) return;
+  activeFilter = cat;
+  document.querySelectorAll(".filter-chip").forEach(b => b.classList.toggle("active", b.dataset.filter === cat));
   applyFilters();
-
-  const shopSection = $("shop");
-
-  if (shopSection) {
-    shopSection.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
+  if (scroll) $("shop")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function sortProducts(v) {
+  [...cards].sort((a, b) => {
+    const pa = +a.dataset.price || 0, pb = +b.dataset.price || 0;
+    if (v === "low") return pa - pb;
+    if (v === "high") return pb - pa;
+    if (v === "az") return (a.dataset.name || "").localeCompare(b.dataset.name || "");
+    return (+a.dataset.id.replace(/\D/g, "")) - (+b.dataset.id.replace(/\D/g, ""));
+  }).forEach(c => productGrid.appendChild(c));
 }
 
-
-/* =========================================================
-   14. PRODUCT SORTING
-========================================================= */
-
-function sortProducts(value) {
-  if (!productGrid) return;
-
-  const sorted = [...productCards].sort((a, b) => {
-    const priceA = Number(a.dataset.price) || 0;
-    const priceB = Number(b.dataset.price) || 0;
-
-    if (value === "low") {
-      return priceA - priceB;
-    }
-
-    if (value === "high") {
-      return priceB - priceA;
-    }
-
-    const idA = Number((a.dataset.id || "").replace(/^p/i, "")) || 0;
-    const idB = Number((b.dataset.id || "").replace(/^p/i, "")) || 0;
-
-    return idA - idB;
-  });
-
-  sorted.forEach(card => {
-    productGrid.appendChild(card);
-  });
-}
-
-
-/* =========================================================
-   15. SEARCH PANEL
-========================================================= */
-
-function openSearch() {
-  if (!searchPanel) return;
-
-  searchPanel.classList.add("open");
-  searchPanel.setAttribute("aria-hidden", "false");
-
-  if (searchInput) {
-    searchInput.focus();
-  }
-}
-
-function closeSearch() {
-  if (!searchPanel) return;
-
-  searchPanel.classList.remove("open");
-  searchPanel.setAttribute("aria-hidden", "true");
-}
-
-
-/* =========================================================
-   16. MOBILE NAVIGATION
-========================================================= */
-
-function closeMenu() {
-  if (mainNav) {
-    mainNav.classList.remove("open");
-  }
-
-  if (menuToggle) {
-    menuToggle.setAttribute("aria-expanded", "false");
-  }
-}
-
-function toggleMenu() {
-  if (!mainNav || !menuToggle) return;
-
-  const isOpen = mainNav.classList.toggle("open");
-
-  menuToggle.setAttribute(
-    "aria-expanded",
-    String(isOpen)
-  );
-}
-
-
-/* =========================================================
-   17. SERVICE BOOKING FORM
-========================================================= */
-
-if (bookingDate) {
-  bookingDate.min = getLocalDate();
-}
-
-if (bookingForm) {
-  bookingForm.addEventListener("submit", event => {
-    event.preventDefault();
-
-    const form = new FormData(bookingForm);
-
-    const getValue = name => {
-      const value = form.get(name);
-      return String(value ?? "").trim();
-    };
-
-    const name = getValue("name");
-    const phone = getValue("phone");
-    const service = getValue("service");
-    const location = getValue("location");
-    const date = getValue("date") || "Flexible";
-    const details = getValue("details") || "Not provided";
-
-    if (!name || !phone || !service || !location) {
-      showToast("Please complete all required booking fields");
-      return;
-    }
-
-    const message = [
-      "Hello Zion Technologie Ghana, I would like to request a service booking.",
-      "",
-      `Name: ${name}`,
-      `Phone: ${phone}`,
-      `Service: ${service}`,
-      `Town / area: ${location}`,
-      `Preferred date: ${date}`,
-      `Job details: ${details}`,
-      "",
-      "Please contact me to confirm availability, quotation and appointment."
-    ].join("\n");
-
-    sendWhatsApp(message);
-  });
-}
-
-
-/* =========================================================
-   18. CONTACT INFORMATION
-========================================================= */
-
-const contactMessage =
-  "Hello Zion Technologie, I would like to enquire about your products and services.";
-
-const contactNumber = getWhatsAppNumber();
-
-if (contactWhatsapp) {
-  if (contactNumber) {
-    contactWhatsapp.href =
-      `https://wa.me/${contactNumber}?text=${encodeURIComponent(contactMessage)}`;
-
-    contactWhatsapp.target = "_blank";
-    contactWhatsapp.rel = "noopener noreferrer";
-  } else {
-    contactWhatsapp.addEventListener("click", event => {
-      event.preventDefault();
-      showToast("Set a valid WhatsApp number in script.js");
-    });
-  }
-}
-
-if (contactEmail) {
-  contactEmail.href = `mailto:${ZION_CONFIG.email}`;
-}
-
-if (footerEmail) {
-  footerEmail.href = `mailto:${ZION_CONFIG.email}`;
-  footerEmail.textContent = ZION_CONFIG.email;
-}
-
-
-/* =========================================================
-   19. FOOTER YEAR
-========================================================= */
-
-const yearElement = $("year");
-
-if (yearElement) {
-  yearElement.textContent = new Date().getFullYear();
-}
-
-
-/* =========================================================
-   20. GLOBAL CLICK EVENTS
-========================================================= */
-
-document.addEventListener("click", event => {
-  const target = event.target;
-
-  if (!(target instanceof Element)) return;
-
-
-  // Add product to cart
-  const addButton = target.closest(".add-cart");
-
-  if (addButton) {
-    addToCart(addButton.dataset.id);
-  }
-
-
-  // Cart quantity and remove buttons
-  const quantityButton = target.closest("[data-action]");
-
-  if (quantityButton) {
-    updateQuantity(
-      quantityButton.dataset.id,
-      quantityButton.dataset.action
-    );
-  }
-
-
-  // Product category filters
-  const filterButton = target.closest(".filter-chip");
-
-  if (filterButton) {
-    setFilter(filterButton.dataset.filter);
-  }
-
-
-  // Category links
-  const categoryLink = target.closest("[data-category-link]");
-
-  if (categoryLink) {
-    const category = categoryLink.dataset.categoryLink;
-
-    const matchingFilter = [...document.querySelectorAll(".filter-chip")]
-      .some(button => button.dataset.filter === category);
-
-    if (matchingFilter) {
-      event.preventDefault();
-      setFilter(category);
-    } else {
-      activeFilter = "All";
-
-      document.querySelectorAll(".filter-chip").forEach(button => {
-        button.classList.toggle(
-          "active",
-          button.dataset.filter === "All"
-        );
-      });
-
-      applyFilters();
-    }
-  }
-
-
-  // Service selection links
-  const serviceLink = target.closest("[data-service]");
-
-  if (serviceLink) {
-    const serviceSelect = $("serviceSelect");
-
-    if (serviceSelect) {
-      serviceSelect.value = serviceLink.dataset.service;
-    }
-  }
-
-
-  // Close search when clicking outside its panel
-  if (
-    searchPanel &&
-    searchPanel.classList.contains("open") &&
-    !target.closest("#searchPanel") &&
-    !target.closest("#searchTrigger")
-  ) {
-    closeSearch();
-  }
+/* ---------- search panel + menu ---------- */
+function openSearch() { searchPanel?.classList.add("open"); searchPanel?.setAttribute("aria-hidden", "false"); searchInput?.focus(); }
+function closeSearch() { searchPanel?.classList.remove("open"); searchPanel?.setAttribute("aria-hidden", "true"); }
+function closeMenu() { mainNav?.classList.remove("open"); menuToggle?.setAttribute("aria-expanded", "false"); }
+
+/* ---------- booking form ---------- */
+const bookingDate = $("bookingDate");
+if (bookingDate) bookingDate.min = localDate();
+bookingForm?.addEventListener("submit", e => {
+  e.preventDefault();
+  const f = new FormData(bookingForm), g = k => String(f.get(k) ?? "").trim();
+  if (!g("name") || !g("phone") || !g("service") || !g("location")) return toast("Please complete all required booking fields");
+  if (!validPhone(g("phone"))) return toast("Please enter a valid phone number");
+  sendWhatsApp([
+    "Hello Zion Technologie, I would like to request a service booking.", "",
+    `Name: ${g("name")}`, `Phone: ${g("phone")}`, `Service: ${g("service")}`,
+    `Town / area: ${g("location")}`, `Preferred date: ${g("date") || "Flexible"}`,
+    `Job details: ${g("details") || "Not provided"}`, "",
+    "Please contact me to confirm availability, quotation and appointment."
+  ].join("\n"));
 });
 
-
-/* =========================================================
-   21. BUTTON EVENT LISTENERS
-========================================================= */
-
-const cartTrigger = $("cartTrigger");
-const closeCartButton = $("closeCart");
-const checkoutButton = $("checkoutBtn");
-
-const searchTrigger = $("searchTrigger");
-const closeSearchButton = $("closeSearch");
-
-const sortSelect = $("sortSelect");
-
-if (cartTrigger) {
-  cartTrigger.addEventListener("click", openCart);
+/* ---------- contact links + year ---------- */
+const cw = $("contactWhatsapp"), n = waNumber();
+if (cw) {
+  if (n) { cw.href = `https://wa.me/${n}?text=${encodeURIComponent("Hello Zion Technologie, I would like to enquire about your products and services.")}`; cw.target = "_blank"; cw.rel = "noopener noreferrer"; }
+  else cw.addEventListener("click", e => { e.preventDefault(); toast("Set a valid WhatsApp number in script.js"); });
 }
+if ($("contactEmail")) $("contactEmail").href = `mailto:${ZION_CONFIG.email}`;
+if ($("footerEmail")) { $("footerEmail").href = `mailto:${ZION_CONFIG.email}`; $("footerEmail").textContent = ZION_CONFIG.email; }
+if ($("year")) $("year").textContent = new Date().getFullYear();
 
-if (closeCartButton) {
-  closeCartButton.addEventListener("click", closeCart);
-}
-
-if (backdrop) {
-  backdrop.addEventListener("click", closeCart);
-}
-
-if (checkoutButton) {
-  checkoutButton.addEventListener("click", checkout);
-}
-
-if (searchTrigger) {
-  searchTrigger.addEventListener("click", openSearch);
-}
-
-if (closeSearchButton) {
-  closeSearchButton.addEventListener("click", closeSearch);
-}
-
-if (searchInput) {
-  searchInput.addEventListener("input", event => {
-    searchTerm = event.target.value.trim();
-    applyFilters();
-  });
-}
-
-if (sortSelect) {
-  sortSelect.addEventListener("change", event => {
-    sortProducts(event.target.value);
-  });
-}
-
-
-/* =========================================================
-   22. MOBILE MENU EVENTS
-========================================================= */
-
-if (menuToggle) {
-  menuToggle.addEventListener("click", toggleMenu);
-}
-
-if (mainNav) {
-  mainNav.addEventListener("click", event => {
-    if (
-      event.target instanceof Element &&
-      event.target.closest("a")
-    ) {
-      closeMenu();
-    }
-  });
-}
-
-
-/* =========================================================
-   23. KEYBOARD ACCESSIBILITY
-========================================================= */
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    closeCart();
-    closeSearch();
-    closeMenu();
-  }
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  const t = e.target;
+  if (!(t instanceof Element)) return;
+  const add = t.closest(".add-cart");        if (add && !add.disabled) addToCart(add.dataset.id);
+  const wish = t.closest("[data-wish]");     if (wish) toggleWish(wish.dataset.wish);
+  const act = t.closest("#cartItems [data-action]"); if (act && !act.disabled) updateQty(act.dataset.id, act.dataset.action);
+  const chip = t.closest(".filter-chip");    if (chip) setFilter(chip.dataset.filter);
+  const cat = t.closest("[data-category-link]");
+  if (cat) { e.preventDefault(); setFilter(cat.dataset.categoryLink); }
+  const svc = t.closest("[data-service]");   if (svc && $("serviceSelect")) $("serviceSelect").value = svc.dataset.service;
+  if (searchPanel?.classList.contains("open") && !t.closest("#searchPanel") && !t.closest("#searchTrigger")) closeSearch();
 });
+$("cartTrigger")?.addEventListener("click", openCart);
+$("closeCart")?.addEventListener("click", closeCart);
+backdrop?.addEventListener("click", closeCart);
+$("checkoutBtn")?.addEventListener("click", checkout);
+$("promoBtn")?.addEventListener("click", applyPromo);
+$("promoInput")?.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); applyPromo(); } });
+$("clearCart")?.addEventListener("click", () => { if (confirm("Remove all items from your cart?")) { cart = {}; persistCart(); } });
+["coName", "coPhone", "coMethod", "coPayment", "coLocation", "coNote"].forEach(id => $(id)?.addEventListener("input", renderCart));
+$("searchTrigger")?.addEventListener("click", openSearch);
+$("closeSearch")?.addEventListener("click", closeSearch);
+searchInput?.addEventListener("input", e => { searchTerm = e.target.value.trim(); applyFilters(); });
+$("sortSelect")?.addEventListener("change", e => sortProducts(e.target.value));
+menuToggle?.addEventListener("click", () => menuToggle.setAttribute("aria-expanded", String(mainNav.classList.toggle("open"))));
+mainNav?.addEventListener("click", e => { if (e.target.closest("a")) closeMenu(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeCart(); closeSearch(); closeMenu(); } });
+window.addEventListener("storage", e => { if (e.key === "ZionGhanaCart") { cart = store.get("ZionGhanaCart", {}); renderCart(); } });
 
-
-/* =========================================================
-   24. INITIALIZE WEBSITE
-========================================================= */
-
+/* ---------- init ---------- */
+renderWishlist();
 renderCart();
 applyFilters();
-
-console.info(
-  "Zion Technologie website initialized successfully."
-);

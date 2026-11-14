@@ -2819,3 +2819,130 @@ textarea:focus-visible {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Add after style.css: <link rel="stylesheet" href="shop-extras.css"> */
+.wish-btn{position:absolute;z-index:3;top:12px;right:12px;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--navy);font-size:18px;line-height:1;display:grid;place-items:center;box-shadow:var(--shadow-sm);transition:transform var(--transition),color var(--transition)}
+.wish-btn:hover{transform:scale(1.1)}
+.wish-btn.on{color:#d1435b;border-color:#f0c3cb}
+.sold-out .product-image img{opacity:.45}
+.add-cart:disabled,.qty-controls button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.no-results{margin:28px 0 0;padding:28px;border:1px dashed #cfdbe0;border-radius:13px;background:#fff;color:var(--muted);font-size:13px;text-align:center}
+.no-results[hidden]{display:none}
+.product-card[hidden]{display:none}
+
+.co-box{margin-bottom:16px;display:flex;flex-direction:column;gap:12px}
+.co-promo{display:flex;gap:8px}
+.co-promo input,.co-grid input,.co-grid select{width:100%;min-width:0;min-height:42px;padding:0 12px;border:1px solid #e2e8eb;border-radius:8px;background:#fbfcfc;color:var(--ink);font-size:12px}
+.co-grid input:focus,.co-grid select:focus,.co-promo input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(8,127,140,.1)}
+.co-promo button{padding:0 16px;border:0;border-radius:8px;background:var(--teal);color:#fff;font-size:11px;font-weight:700}
+.co-summary{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted)}
+.co-summary div{display:flex;justify-content:space-between}
+.co-summary b{color:var(--navy)}
+.co-summary .good,.co-summary .good b{color:#14804a}
+.co-details summary{cursor:pointer;margin-bottom:10px;color:var(--navy);font-size:12px;font-weight:700}
+.co-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.co-grid .co-wide{grid-column:span 2}
+.co-grid [hidden]{display:none}
+.co-clear{margin-top:10px;width:100%;padding:8px;border:0;background:transparent;color:#c64e4e;font-size:11px}
+.co-box[hidden],.co-clear[hidden],.checkout-btn[hidden]{display:none}
+@media(max-width:620px){.co-grid{grid-template-columns:1fr}.co-grid .co-wide{grid-column:auto}.cart-footer{max-height:62dvh;overflow-y:auto}}
+
+/* ZION — SMALL-SCREEN SAFETY PATCH
+   Keeps your current design. Paste at the very END of style.css
+   (or save as overflow-fix.css and link it after style.css). */
+
+/* 1. Page can never scroll sideways */
+html{-webkit-text-size-adjust:100%}
+body{overflow-x:hidden}
+@supports (overflow:clip){body{overflow-x:clip}}
+img,video,svg,iframe{max-width:100%}
+
+/* 2. Long words and addresses wrap instead of pushing the layout */
+h1,h2,h3,h4,p,a,span,strong,small,label,b{overflow-wrap:break-word}
+.footer-main a,.footer-main p{overflow-wrap:anywhere}
+
+/* 3. Grid and flex children may shrink below their content width */
+.nav-wrap>*,.hero-layout>*,.hero-art,.service-intro-grid>*,.booking-layout>*,
+.why-layout>*,.contact-layout>*,.section-heading>*,.footer-main>*,
+.quick-grid>*,.form-row>*,.topbar-inner>*,.brand{min-width:0}
+
+/* 4. Buttons, labels and form controls stay inside their boxes */
+.btn{max-width:100%;white-space:normal;text-align:center}
+.cart-trigger{white-space:nowrap}
+.product-label{max-width:calc(100% - 16px);white-space:normal;line-height:1.25}
+.sort-label select,.booking-form :is(input,select,textarea){max-width:100%}
+.booking-form input[type="date"]{min-width:0;-webkit-appearance:none;appearance:none}
+
+/* 5. Mobile menu: full-width, scrolls if taller than the screen */
+@media (max-width:820px){
+  .nav{position:fixed;top:74px;left:0;right:0;max-height:calc(100dvh - 74px);overflow-y:auto}
+}
+
+/* 6. Phones */
+@media (max-width:620px){
+  .nav{top:68px}
+  .nav-wrap{gap:8px}
+  .nav-actions{gap:6px}
+
+  .hero h1{font-size:clamp(34px,11vw,56px)}
+  .section-heading h2,.why-layout h2,.service-intro h2,.booking-copy h2{font-size:clamp(32px,9.5vw,48px)}
+  .contact-layout h2{font-size:clamp(34px,10vw,45px)}
+
+  /* floating hero badges stay inside the photo */
+  .hero-tag{max-width:calc(100% - 16px)}
+  .tag-top{left:8px}
+  .tag-bottom{right:8px}
+
+  /* 16px fields: readable and iOS will not zoom the page on focus */
+  .booking-form :is(input,select,textarea),
+  .co-promo input,.co-grid :is(input,select),
+  .search-box input,.sort-label select{font-size:16px}
+
+  .cart-footer{max-height:60dvh;overflow-y:auto}
+  .cart-item-side{white-space:normal}
+}
+
+/* 7. Very small phones (320–359px): single column, no cramped cards */
+@media (max-width:359px){
+  .container{width:calc(100% - 22px)}
+  .brand-word small{display:none}
+  .brand-word{font-size:12px}
+  .cart-trigger{padding-inline:7px;gap:5px}
+  .product-grid,.service-cards{grid-template-columns:1fr}
+  .product-image{height:170px}
+  .product-info p,.service-card p{min-height:0}
+  .category-grid{grid-template-rows:200px 160px 160px}
+}
+
+/* ZION — MOBILE NAVBAR FIX
+   Paste at the very END of style.css (after the overflow patch). */
+
+@media (max-width:820px){
+  /* menu button goes to the far right, after search + cart */
+  .nav-wrap{position:static;gap:10px}
+  .nav-actions{order:2;margin-left:auto}
+  .menu-toggle{order:3;display:flex;flex:none;width:42px;height:42px;padding:0;gap:5px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;background:#fff;transition:background .2s ease,border-color .2s ease}
+  .menu-toggle span{width:20px;height:2px;border-radius:2px;transition:transform .25s ease}
+  .menu-toggle[aria-expanded="true"]{background:var(--teal-soft);border-color:var(--teal)}
+  .menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
+  .menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
+
+  /* dropdown sits directly under the header, full screen width */
+  .nav{position:absolute;top:100%;left:0;right:0;max-height:calc(100dvh - 74px);overflow-y:auto;overscroll-behavior:contain;padding:6px 24px 16px;border-top:1px solid var(--line);background:#fff;box-shadow:0 24px 40px rgba(16,29,43,.14)}
+  .nav a{padding:16px 4px;border-bottom:1px solid #edf0f2;font-size:15px;font-weight:600}
+  .nav a:last-child{border-bottom:0}
+  .nav a.active{color:var(--teal)}
+}
+
+@media (max-width:620px){
+  .nav-wrap{gap:6px}
+  .nav{top:100%;max-height:calc(100dvh - 68px);padding-inline:20px}
+  .nav-icon,.menu-toggle{width:38px;height:38px}
+  .cart-trigger{height:38px}
+}
+
+@media (max-width:359px){
+  .nav-icon,.menu-toggle{width:34px;height:34px}
+  .nav-actions{gap:4px}
+}
