@@ -1780,24 +1780,28 @@ footer {
 
 .toast {
   position: fixed;
-  bottom: 25px;
-  left: 50%;
-  transform: translate(-50%, 20px);
-  background: #092438;
-  color: #fff;
-  padding: 13px 19px;
-  border-radius: 9px;
-  font-size: 11px;
-  z-index: 1200;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translatey(-100%);
+  background: #d4edda;
+  color: #155724;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  z-index: 2100;
   opacity: 0;
   pointer-events: none;
-  transition: .25s;
-  box-shadow: var(--shadow);
+  transition: .3s ease;
+  border-bottom: 1px solid #c3e6cb;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .toast.show {
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translatey(0);
+  pointer-events: auto;
 }
 
 /* 19. TABLET RESPONSIVE
@@ -2516,25 +2520,44 @@ footer {
   }
 
   .product-info {
+    padding: 16px;
+  }
+
+  .product-info p {
+    font-size: 11px;
+    min-height: 55px;
+  }
+
+  .product-price {
+    font-size: 14px;
+  }
+
+  .add-btn-label {
+    display: none;
+  }
+
+  .add-btn {
+    padding: 12px;
+    font-size: 18px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    justify-content: center;
+  }
+
+  .product-image {
+    height: 190px;
     padding: 12px;
   }
 
   .product-info h3 {
-    font-size: 12px;
-  }
-
-  .product-info p {
-    font-size: 9px;
-    min-height: 45px;
-  }
-
-  .product-price {
-    font-size: 12px;
-  }
-
-  .add-btn {
-    padding: 9px 8px;
-    font-size: 8px;
+    font-size: 15px;
+    margin: 8px 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* FEATURE BAND */
@@ -2698,12 +2721,7 @@ footer {
   }
 
   .product-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .product-image {
-    height: 230px;
-    padding: 15px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .service-grid {
@@ -2844,11 +2862,6 @@ footer {
 .add-btn {
   background: #ffe5e5;
   color: #ff0000;
-}
-
-.add-btn:hover {
-  background: #ff0000;
-  color: #fff;
 }
 
 .catalogue-note span {

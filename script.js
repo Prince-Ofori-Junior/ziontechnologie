@@ -295,7 +295,7 @@ function renderProducts() {
             <button
               class="add-btn"
               data-add="${product.id}">
-              Add to cart ＋
+              <span class="add-btn-label">Add to cart</span> 🛒
             </button>
 
           </div>

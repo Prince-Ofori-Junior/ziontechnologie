@@ -12,64 +12,72 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="contact.css">
+  <script src="script.js" defer></script>
   <script src="contact.js" defer></script>
 </head>
 
 <body>
 
-  <!-- HEADER -->
+  <div class="announcement">
+    <span class="pulse"></span>
+    SMART TECHNOLOGY. PRACTICAL SOLUTIONS.
+    <span class="announce-right">Accra, Ghana · Nationwide enquiries</span>
+  </div>
+
   <header class="site-header">
 
     <div class="header-top">
 
-     <a class="brand" href="index.html#home" aria-label="Zion Technologie home">
-  <span class="brand-mark"><i></i><i></i><i></i></span>
-  <span>
-    ZION <b>TECHNOLOGIE</b>
-    <small>CONNECT · PROTECT · ENJOY</small>
-  </span>
-</a>
-
-      <a class="header-call"
-         href="https://wa.me/233595856187"
-         target="_blank"
-         rel="noopener">
-
-        <span class="call-icon" aria-hidden="true">↗</span>
-
+      <a class="brand" href="index.html#home" aria-label="Zion Technologie home">
+        <span class="brand-mark"><i></i><i></i><i></i></span>
         <span>
-          <small>Talk to our team</small>
-          <strong>+233 595 856 187</strong>
+          ZION <b>TECHNOLOGIE</b>
+          <small>CONNECT · PROTECT · ENJOY</small>
         </span>
-
       </a>
 
-      <button
-        class="mobile-menu"
-        id="mobileMenu"
-        type="button"
-        aria-label="Open navigation"
-        aria-expanded="false"
-        aria-controls="navigation">
-        ☰
-      </button>
+      <div class="header-search-wrap" id="headerSearchWrap">
+        <form class="header-search" id="headerSearchForm">
+          <input
+            type="search"
+            id="headerSearchInput"
+            placeholder="Search products, routers, CCTV..."
+            autocomplete="off"
+          >
+          <button type="submit" aria-label="Search">⌕</button>
+        </form>
+        <div class="search-suggestions" id="searchSuggestions"></div>
+      </div>
+
+      <div class="header-actions">
+        <button class="cart-button" id="cartOpen" aria-label="Open shopping cart">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-label">Cart</span>
+          <span id="cartCount">0</span>
+        </button>
+
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
 
     </div>
 
     <div class="header-nav">
-
-      <nav id="navigation" aria-label="Main navigation">
-        <a class="nav-link" href="index.html#home">Home</a>
-        <a class="nav-link" href="index.html#catalogue">Shop</a>
-        <a class="nav-link" href="index.html#solutions">Solutions</a>
-        <a class="nav-link" href="index.html#solutions">Services</a>
-        <a class="nav-link" href="index.html#about">About</a>
-        <a class="nav-link active" href="contact.html" aria-current="page">Contact</a>
+      <nav id="navigation">
+        <a href="index.html#home" class="nav-link">Home</a>
+        <a href="index.html#catalogue" class="nav-link">Shop</a>
+        <a href="index.html#solutions" class="nav-link">Solutions</a>
+        <a href="contact.html?type=booking" class="nav-link">Book a service</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link active" aria-current="page">Contact</a>
       </nav>
-
     </div>
 
   </header>
@@ -425,6 +433,117 @@
 
   </main>
 
+
+  <!-- SHOPPING CART -->
+  <aside class="cart-drawer" id="cartDrawer"
+    aria-label="Shopping cart" aria-hidden="true">
+
+    <div class="drawer-head">
+      <div>
+        <small>YOUR SELECTION</small>
+        <h3>Shopping cart <span id="drawerCount">0</span></h3>
+      </div>
+      <button class="close-btn" id="cartClose" aria-label="Close cart">×</button>
+    </div>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-bottom">
+      <div class="subtotal">
+        <span>Estimated subtotal</span>
+        <b id="cartTotal">GH₵ 0.00</b>
+      </div>
+
+      <p>
+        Delivery, installation and stock availability are confirmed by our team.
+      </p>
+
+      <button class="button primary checkout" id="checkout">
+        Continue on WhatsApp ↗
+      </button>
+
+      <a class="button checkout-call" href="tel:+233595856187">
+        ☎ Call to Order
+      </a>
+    </div>
+  </aside>
+
+  <!-- SEARCH MODAL -->
+  <div class="search-modal" id="searchModal" aria-hidden="true">
+    <div class="search-modal-box">
+      <button class="close-btn" id="searchClose" aria-label="Close search">×</button>
+
+      <div class="eyebrow"><span></span> FIND YOUR TECH</div>
+      <h3>What are you looking for?</h3>
+
+      <input id="modalSearch" type="search"
+        placeholder="Search routers, CCTV, cables…">
+
+      <p>Search the catalogue by product name or category.</p>
+    </div>
+  </div>
+
+  <!-- QUICK VIEW -->
+  <div class="quick-view" id="quickView">
+    <div class="quick-view-box" id="quickViewContent"></div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <nav class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true" aria-label="Main navigation">
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-header">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close navigation">×</button>
+        <a href="index.html#home" class="mobile-brand">
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span>ZION <b>TECHNOLOGIE</b></span>
+        </a>
+      </div>
+
+      <div class="mobile-nav-search">
+        <form class="mobile-search-form">
+          <input type="search" placeholder="Search products…" aria-label="Search products">
+          <button type="submit">⌕</button>
+        </form>
+      </div>
+
+      <ul class="mobile-nav-list" role="menubar">
+        <li role="none"><a href="index.html#home" class="mobile-nav-link" role="menuitem">Home</a></li>
+        <li role="none"><a href="index.html#catalogue" class="mobile-nav-link" role="menuitem">Shop</a></li>
+        <li role="none"><a href="index.html#solutions" class="mobile-nav-link" role="menuitem">Solutions</a></li>
+        <li role="none"><a href="contact.html?type=booking" class="mobile-nav-link" role="menuitem">Book a service</a></li>
+        <li role="none"><a href="index.html#about" class="mobile-nav-link" role="menuitem">About</a></li>
+        <li role="none"><a href="contact.html" class="mobile-nav-link" role="menuitem">Contact</a></li>
+      </ul>
+
+      <div class="mobile-nav-divider"></div>
+
+      <div class="mobile-nav-contact">
+        <p class="mobile-nav-label">Get in touch</p>
+        <a href="tel:+233595856187" class="mobile-nav-contact-item">
+          <span>☎</span> +233 59 585 6187
+        </a>
+        <a href="mailto:hello@ziontechnologies.com" class="mobile-nav-contact-item">
+          <span>✉</span> hello@ziontechnologies.com
+        </a>
+        <a href="contact.html" class="mobile-nav-contact-item">
+          <span>↗</span> Contact page
+        </a>
+      </div>
+
+      <div class="mobile-nav-actions">
+        <button class="mobile-nav-btn primary" id="mobileCartOpen">
+          <span>🛒</span> View Cart <span id="mobileCartCount">0</span>
+        </button>
+        <a href="https://wa.me/233595856187" class="mobile-nav-btn secondary" target="_blank" rel="noopener">
+          <span>✳</span> Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+  </nav>
 
   <!-- FOOTER -->
   <footer class="site-footer">
