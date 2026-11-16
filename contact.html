@@ -1,0 +1,463 @@
+
+<!doctype html>
+<html lang="en-GH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071827">
+  <meta name="description" content="Contact Zion Technologie in Ghana to request a technology service, book an appointment, or enquire about products and installations.">
+
+  <title>Contact & Service Booking | Zion Technologie</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="contact.css">
+  <script src="contact.js" defer></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+
+    <div class="header-top">
+
+     <a class="brand" href="index.html#home" aria-label="Zion Technologie home">
+  <span class="brand-mark"><i></i><i></i><i></i></span>
+  <span>
+    ZION <b>TECHNOLOGIE</b>
+    <small>CONNECT · PROTECT · ENJOY</small>
+  </span>
+</a>
+
+      <a class="header-call"
+         href="https://wa.me/233595856187"
+         target="_blank"
+         rel="noopener">
+
+        <span class="call-icon" aria-hidden="true">↗</span>
+
+        <span>
+          <small>Talk to our team</small>
+          <strong>+233 595 856 187</strong>
+        </span>
+
+      </a>
+
+      <button
+        class="mobile-menu"
+        id="mobileMenu"
+        type="button"
+        aria-label="Open navigation"
+        aria-expanded="false"
+        aria-controls="navigation">
+        ☰
+      </button>
+
+    </div>
+
+    <div class="header-nav">
+
+      <nav id="navigation" aria-label="Main navigation">
+        <a class="nav-link" href="index.html#home">Home</a>
+        <a class="nav-link" href="index.html#catalogue">Shop</a>
+        <a class="nav-link" href="index.html#solutions">Solutions</a>
+        <a class="nav-link" href="index.html#solutions">Services</a>
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link active" href="contact.html" aria-current="page">Contact</a>
+      </nav>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+    
+    <!-- CONTACT FORMS -->
+    <section class="contact-main section-shell" id="service-form">
+
+      <!-- LEFT INFORMATION -->
+      <div class="section-intro">
+
+        <div class="eyebrow dark">
+          <span></span>
+          CONTACT ZION TECHNOLOGIE
+        </div>
+
+        <h2>
+          How can we<br>
+          <em>assist you?</em>
+        </h2>
+
+        <p>
+          Choose the option that best describes what you need.
+          Complete the form and send your details to our team
+          through WhatsApp.
+        </p>
+
+        <div class="response-note">
+
+          <span class="note-check">✓</span>
+
+          <span>
+            <strong>Direct communication</strong>
+            <small>
+              Your request is prepared as a message to our business WhatsApp.
+            </small>
+          </span>
+
+        </div>
+
+        <div class="contact-side-links">
+
+          <a href="tel:+233595856187">
+            <span>Call</span>
+            +233 595 856 187
+            <b>↗</b>
+          </a>
+
+          <a
+            href="https://wa.me/233595856187"
+            target="_blank"
+            rel="noopener">
+            <span>WhatsApp</span>
+            Start a conversation
+            <b>↗</b>
+          </a>
+
+          <a href="mailto:hello@ziontechnologies.com">
+            <span>Email</span>
+            hello@ziontechnologies.com
+            <b>↗</b>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- FORM PANEL -->
+      <div class="form-panel">
+
+        <!-- FORM TABS -->
+        <div class="form-tabs" role="tablist" aria-label="Choose contact form">
+
+          <button
+            class="form-tab active"
+            id="requestTab"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="requestPanel"
+            data-form-tab="request">
+            Request a service
+          </button>
+
+          <button
+            class="form-tab"
+            id="bookingTab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="bookingPanel"
+            data-form-tab="booking">
+            Book a service
+          </button>
+
+        </div>
+
+
+        <!-- SERVICE REQUEST FORM -->
+        <form
+          class="contact-form active"
+          id="requestPanel"
+          data-form-panel="request">
+
+          <input
+            type="hidden"
+            name="requestType"
+            value="Service request">
+
+          <div class="form-heading">
+            <span>01 / SERVICE REQUEST</span>
+            <h3>Tell us what you need.</h3>
+          </div>
+
+          <div class="field-grid">
+
+            <label class="field">
+              <span>Full name <b>*</b></span>
+              <input
+                name="name"
+                type="text"
+                placeholder="Your full name"
+                autocomplete="name"
+                required>
+            </label>
+
+            <label class="field">
+              <span>Phone number <b>*</b></span>
+              <input
+                name="phone"
+                type="tel"
+                placeholder="+233 ..."
+                autocomplete="tel"
+                required>
+            </label>
+
+            <label class="field">
+              <span>Email address</span>
+              <input
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email">
+            </label>
+
+            <label class="field">
+              <span>Your location <b>*</b></span>
+              <input
+                name="location"
+                type="text"
+                placeholder="Town / area / city"
+                autocomplete="address-level2"
+                required>
+            </label>
+
+            <label class="field field-full">
+              <span>Service required <b>*</b></span>
+
+              <select name="service" required>
+                <option value="">Select a service</option>
+                <option>Wi-Fi and network installation</option>
+                <option>CCTV and security systems</option>
+                <option>Router and internet setup</option>
+                <option>Computer and IT support</option>
+                <option>Software or website development</option>
+                <option>Smart technology installation</option>
+                <option>Product installation / configuration</option>
+                <option>Maintenance and troubleshooting</option>
+                <option>Other service</option>
+              </select>
+            </label>
+
+            <label class="field field-full">
+              <span>Describe what you need <b>*</b></span>
+
+              <textarea
+                name="details"
+                rows="4"
+                placeholder="Give us a few details about the service you need..."
+                required></textarea>
+            </label>
+
+          </div>
+
+          <button
+            class="button button-red submit-button"
+            type="submit">
+            Send service request <span>↗</span>
+          </button>
+
+          <p class="form-disclaimer">
+            Submitting opens WhatsApp with your request details
+            for you to review and send.
+          </p>
+
+        </form>
+
+
+        <!-- SERVICE BOOKING FORM -->
+        <form
+          class="contact-form"
+          id="bookingPanel"
+          data-form-panel="booking"
+          hidden>
+
+          <input
+            type="hidden"
+            name="requestType"
+            value="Service booking">
+
+          <div class="form-heading">
+            <span>02 / APPOINTMENT BOOKING</span>
+            <h3>Choose a preferred time.</h3>
+          </div>
+
+          <div class="field-grid">
+
+            <label class="field">
+              <span>Full name <b>*</b></span>
+              <input
+                name="name"
+                type="text"
+                placeholder="Your full name"
+                autocomplete="name"
+                required>
+            </label>
+
+            <label class="field">
+              <span>Phone number <b>*</b></span>
+              <input
+                name="phone"
+                type="tel"
+                placeholder="+233 ..."
+                autocomplete="tel"
+                required>
+            </label>
+
+            <label class="field">
+              <span>Email address</span>
+              <input
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email">
+            </label>
+
+            <label class="field">
+              <span>Location <b>*</b></span>
+              <input
+                name="location"
+                type="text"
+                placeholder="Town / area / city"
+                autocomplete="address-level2"
+                required>
+            </label>
+
+            <label class="field field-full">
+              <span>Service to book <b>*</b></span>
+
+              <select name="service" required>
+                <option value="">Select a service</option>
+                <option>Wi-Fi and network installation</option>
+                <option>CCTV and security systems</option>
+                <option>Router and internet setup</option>
+                <option>Computer and IT support</option>
+                <option>Software or website consultation</option>
+                <option>Smart technology installation</option>
+                <option>Product installation / configuration</option>
+                <option>Maintenance and troubleshooting</option>
+                <option>Other service</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Preferred date <b>*</b></span>
+              <input
+                name="date"
+                type="date"
+                required>
+            </label>
+
+            <label class="field">
+              <span>Preferred time <b>*</b></span>
+
+              <select name="time" required>
+                <option value="">Choose a time</option>
+                <option>8:00 AM – 10:00 AM</option>
+                <option>10:00 AM – 12:00 PM</option>
+                <option>12:00 PM – 2:00 PM</option>
+                <option>2:00 PM – 4:00 PM</option>
+                <option>4:00 PM – 6:00 PM</option>
+                <option>Flexible / To be discussed</option>
+              </select>
+            </label>
+
+            <label class="field field-full">
+              <span>Additional information</span>
+
+              <textarea
+                name="details"
+                rows="3"
+                placeholder="Tell us anything else we should know..."></textarea>
+            </label>
+
+          </div>
+
+          <button
+            class="button button-red submit-button"
+            type="submit">
+            Send booking request <span>↗</span>
+          </button>
+
+          <p class="form-disclaimer">
+            Your preferred date and time are a request, not a confirmed
+            appointment. Our team will contact you to confirm.
+          </p>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+    <!-- WHATSAPP CTA -->
+    <section class="service-banner">
+
+      <div>
+        <div class="eyebrow">
+          <span></span>
+          NEED A QUICK RESPONSE?
+        </div>
+
+        <h2>
+          Let's talk about<br>
+          <em>your project.</em>
+        </h2>
+      </div>
+
+      <a
+        class="button button-light"
+        href="https://wa.me/233595856187?text=Hello%20Zion%20Technologie%2C%20I%20would%20like%20to%20make%20an%20enquiry."
+        target="_blank"
+        rel="noopener">
+        Chat on WhatsApp <span>↗</span>
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+
+    <a class="brand footer-brand" href="index.html#home">
+
+      <span class="brand-mark" aria-hidden="true">
+        <i></i><i></i><i></i>
+      </span>
+
+      <span class="brand-copy">
+        <span>ZION <b>TECHNOLOGIE</b></span>
+        <small>CONNECT · PROTECT · ENJOY</small>
+      </span>
+
+    </a>
+
+    <p>
+      Technology solutions designed to connect, protect and empower.
+    </p>
+
+    <div class="footer-bottom">
+
+      <span>
+        © <span id="currentYear"></span>
+        Zion Technologie. All rights reserved.
+      </span>
+
+      <a href="index.html">Back to homepage ↗</a>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>

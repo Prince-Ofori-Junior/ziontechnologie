@@ -1,0 +1,327 @@
+
+[
+  {
+    "id": "p1",
+    "category": "Routers",
+    "price": 650,
+    "name": "4G LTE Wi-Fi Router",
+    "image": "./images/item1.png",
+    "alt": "4G LTE Wi-Fi router",
+    "description": "SIM-enabled connectivity for homes and small offices."
+  },
+  {
+    "id": "p2",
+    "category": "CCTV",
+    "price": 1250,
+    "name": "4-Channel CCTV Camera Kit",
+    "image": "./images/item2.png",
+    "alt": "CCTV security camera kit",
+    "description": "Starter surveillance package for homes and shops."
+  },
+  {
+    "id": "p3",
+    "category": "Cameras",
+    "price": 480,
+    "name": "Indoor Wi-Fi Security Camera",
+    "image": "./images/item3.png",
+    "alt": "Indoor home security camera",
+    "description": "Remote viewing and motion alerts on supported models."
+  },
+  {
+    "id": "p4",
+    "category": "DSTV",
+    "price": 350,
+    "name": "Satellite Dish & LNB Set",
+    "image": "./images/item4.png",
+    "alt": "Satellite dish antenna",
+    "description": "Dish and LNB options for satellite TV setup."
+  },
+  {
+    "id": "p5",
+    "category": "TVs",
+    "price": 2450,
+    "name": "32-inch Smart LED TV",
+    "image": "./images/item5.png",
+    "alt": "32-inch Smart LED television",
+    "description": "Compact smart entertainment for bedrooms and offices."
+  },
+  {
+    "id": "p6",
+    "category": "Accessories",
+    "price": 95,
+    "name": "64GB USB Flash Drive",
+    "image": "./images/item6.png",
+    "alt": "USB flash drive",
+    "description": "Portable storage for documents, photos and files."
+  },
+  {
+    "id": "p7",
+    "category": "DSTV",
+    "price": 280,
+    "name": "Outdoor TV Antenna",
+    "image": "./images/item7.png",
+    "alt": "Outdoor TV antenna",
+    "description": "Reception options for compatible local TV broadcasts."
+  },
+  {
+    "id": "p8",
+    "category": "CCTV",
+    "price": 780,
+    "name": "8-Channel DVR Recorder",
+    "image": "./images/item8.png",
+    "alt": "DVR surveillance recorder",
+    "description": "Recorder option for compatible analogue camera systems."
+  },
+  {
+    "id": "p9",
+    "category": "Routers",
+    "price": 520,
+    "name": "Dual-Band Wi-Fi Router",
+    "image": "./images/item9.png",
+    "alt": "Dual-band wireless router",
+    "description": "Reliable wireless connectivity for homes and small offices."
+  },
+  {
+    "id": "p10",
+    "category": "CCTV",
+    "price": 950,
+    "name": "Outdoor IP CCTV Camera",
+    "image": "./images/item10.png",
+    "alt": "Outdoor IP surveillance camera",
+    "description": "Network camera option for entrances and outdoor areas."
+  },
+  {
+    "id": "p11",
+    "category": "Accessories",
+    "price": 180,
+    "name": "Cat6 Ethernet Cable",
+    "image": "./images/item11.png",
+    "alt": "Cat6 Ethernet cable",
+    "description": "Wired network connection for routers and compatible devices."
+  },
+  {
+    "id": "p12",
+    "category": "Accessories",
+    "price": 420,
+    "name": "8-Port Network Switch",
+    "image": "./images/item12.png",
+    "alt": "Eight-port network switch",
+    "description": "Expand wired connections for a small office or home network."
+  },
+  {
+    "id": "p13",
+    "category": "Routers",
+    "price": 680,
+    "name": "Wireless Access Point",
+    "image": "./images/item13.png",
+    "alt": "Wireless access point",
+    "description": "Extend wireless coverage in offices and larger indoor spaces."
+  },
+  {
+    "id": "p14",
+    "category": "Accessories",
+    "price": 390,
+    "name": "Universal TV Wall Mount",
+    "image": "./images/item14.png",
+    "alt": "Universal TV wall mount",
+    "description": "Mounting accessory for compatible flat-screen televisions."
+  },
+  {
+    "id": "p15",
+    "category": "Accessories",
+    "price": 550,
+    "name": "Network UPS Backup",
+    "image": "./images/item15.png",
+    "alt": "Network UPS backup equipment",
+    "description": "Backup power option for compatible networking equipment."
+  },
+  {
+    "id": "p16",
+    "category": "Accessories",
+    "price": 120,
+    "name": "HDMI High-Speed Cable",
+    "image": "./images/item16.png",
+    "alt": "HDMI high-speed cable",
+    "description": "Connect compatible TVs, monitors, decoders and media devices."
+  },
+  {
+    "id": "p17",
+    "category": "Accessories",
+    "price": 150,
+    "name": "Technology Product 17",
+    "image": "./images/item17.png",
+    "alt": "Technology product 17",
+    "description": "Quality technology equipment for home and business use."
+  },
+  {
+    "id": "p18",
+    "category": "Accessories",
+    "price": 200,
+    "name": "Technology Product 18",
+    "image": "./images/item18.png",
+    "alt": "Technology product 18",
+    "description": "Reliable technology equipment for everyday connectivity."
+  },
+  {
+    "id": "p19",
+    "category": "Accessories",
+    "price": 250,
+    "name": "Technology Product 19",
+    "image": "./images/item19.png",
+    "alt": "Technology product 19",
+    "description": "Technology accessory for home and office applications."
+  },
+  {
+    "id": "p20",
+    "category": "Accessories",
+    "price": 300,
+    "name": "Technology Product 20",
+    "image": "./images/item20.png",
+    "alt": "Technology product 20",
+    "description": "Practical technology equipment for your business."
+  },
+  {
+    "id": "p21",
+    "category": "Accessories",
+    "price": 350,
+    "name": "Technology Product 21",
+    "image": "./images/item21.png",
+    "alt": "Technology product 21",
+    "description": "Technology equipment for modern digital environments."
+  },
+  {
+    "id": "p22",
+    "category": "Accessories",
+    "price": 400,
+    "name": "Technology Product 22",
+    "image": "./images/item22.png",
+    "alt": "Technology product 22",
+    "description": "Reliable equipment for home and professional use."
+  },
+  {
+    "id": "p23",
+    "category": "Accessories",
+    "price": 450,
+    "name": "Technology Product 23",
+    "image": "./images/item23.png",
+    "alt": "Technology product 23",
+    "description": "Quality technology equipment and accessories."
+  },
+  {
+    "id": "p24",
+    "category": "Accessories",
+    "price": 500,
+    "name": "Technology Product 24",
+    "image": "./images/item24.png",
+    "alt": "Technology product 24",
+    "description": "Technology solution for home and office environments."
+  },
+  {
+    "id": "p25",
+    "category": "Accessories",
+    "price": 550,
+    "name": "Technology Product 25",
+    "image": "./images/item25.png",
+    "alt": "Technology product 25",
+    "description": "Practical equipment for connectivity and digital applications."
+  },
+  {
+    "id": "p26",
+    "category": "Accessories",
+    "price": 600,
+    "name": "Technology Product 26",
+    "image": "./images/item26.png",
+    "alt": "Technology product 26",
+    "description": "Quality technology equipment for everyday use."
+  },
+  {
+    "id": "p27",
+    "category": "Accessories",
+    "price": 650,
+    "name": "Technology Product 27",
+    "image": "./images/item27.png",
+    "alt": "Technology product 27",
+    "description": "Reliable equipment for modern technology needs."
+  },
+  {
+    "id": "p28",
+    "category": "Accessories",
+    "price": 700,
+    "name": "Technology Product 28",
+    "image": "./images/item28.png",
+    "alt": "Technology product 28",
+    "description": "Technology equipment suitable for home and business."
+  },
+  {
+    "id": "p29",
+    "category": "Accessories",
+    "price": 750,
+    "name": "Technology Product 29",
+    "image": "./images/item29.png",
+    "alt": "Technology product 29",
+    "description": "Quality digital and networking equipment."
+  },
+  {
+    "id": "p30",
+    "category": "Accessories",
+    "price": 800,
+    "name": "Technology Product 30",
+    "image": "./images/item30.png",
+    "alt": "Technology product 30",
+    "description": "Practical technology equipment for professional use."
+  },
+  {
+    "id": "p31",
+    "category": "Accessories",
+    "price": 850,
+    "name": "Technology Product 31",
+    "image": "./images/item31.png",
+    "alt": "Technology product 31",
+    "description": "Reliable technology equipment for your setup."
+  },
+  {
+    "id": "p32",
+    "category": "Accessories",
+    "price": 900,
+    "name": "Technology Product 32",
+    "image": "./images/item32.png",
+    "alt": "Technology product 32",
+    "description": "Quality technology products for everyday applications."
+  },
+  {
+    "id": "p33",
+    "category": "Accessories",
+    "price": 950,
+    "name": "Technology Product 33",
+    "image": "./images/item33.png",
+    "alt": "Technology product 33",
+    "description": "Technology equipment for home and office use."
+  },
+  {
+    "id": "p34",
+    "category": "Accessories",
+    "price": 1000,
+    "name": "Technology Product 34",
+    "image": "./images/item34.png",
+    "alt": "Technology product 34",
+    "description": "Reliable technology equipment and accessories."
+  },
+  {
+    "id": "p35",
+    "category": "Accessories",
+    "price": 1050,
+    "name": "Technology Product 35",
+    "image": "./images/item35.png",
+    "alt": "Technology product 35",
+    "description": "Technology solution for modern connectivity needs."
+  },
+  {
+    "id": "p36",
+    "category": "Accessories",
+    "price": 1100,
+    "name": "Technology Product 36",
+    "image": "./images/item36.png",
+    "alt": "Technology product 36",
+    "description": "Quality technology equipment for home and business."
+  }
+]

@@ -1,0 +1,163 @@
+
+<!doctype html>
+<html lang="en-GH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071827">
+  <meta name="description" content="View product details and order networking, CCTV and smart technology products from Zion Technologie.">
+  <title>Product Details | Zion Technologie</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="product-details.css">
+  <script src="product-details.js" defer></script>
+</head>
+
+<body class="product-page">
+
+  <div class="announcement">
+    <span class="pulse"></span>
+    SMART TECHNOLOGY. PRACTICAL SOLUTIONS.
+    <span class="announce-right">Accra, Ghana · Nationwide enquiries</span>
+  </div>
+
+<header class="site-header">
+
+  <!-- TOP ROW: LOGO, SEARCH AND CART -->
+  <div class="header-top">
+
+    <a class="brand" href="index.html#home" aria-label="Zion Technologie home">
+      <span class="brand-mark">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+
+      <span>
+        ZION <b>TECHNOLOGIE</b>
+        <small>CONNECT · PROTECT · ENJOY</small>
+      </span>
+    </a>
+
+    <div class="header-search-wrap" id="headerSearchWrap">
+      <form class="header-search" id="headerSearchForm">
+        <input
+          type="search"
+          id="headerSearchInput"
+          placeholder="Search products, routers, CCTV..."
+          autocomplete="off"
+        >
+        <button type="submit" aria-label="Search">⌕</button>
+      </form>
+
+      <div class="search-suggestions" id="searchSuggestions"></div>
+    </div>
+
+    <div class="header-actions">
+
+      <button class="cart-button" id="cartOpen" aria-label="Open shopping cart">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-label">Cart</span>
+        <span id="cartCount">0</span>
+      </button>
+
+      <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">
+        ☰
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- SECOND ROW: NAVIGATION -->
+  <div class="header-nav">
+    <nav id="navigation">
+      <a href="index.html#home" class="nav-link">Home</a>
+      <a href="index.html#catalogue" class="nav-link active">Shop</a>
+      <a href="index.html#solutions" class="nav-link">Solutions</a>
+      <a href="index.html#booking" class="nav-link">Book a service</a>
+      <a href="index.html#about" class="nav-link">About</a>
+    </nav>
+  </div>
+
+</header>
+
+  <main>
+    <section class="product-details-section">
+      <div class="product-details-container">
+
+        <div class="product-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="index.html#catalogue">Shop</a>
+          <span>/</span>
+          <span id="breadcrumbProduct">Product details</span>
+        </div>
+
+        <div id="productDetails">
+          <div class="product-loading">
+            <div class="loading-spinner"></div>
+            <p>Loading product details...</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="product-benefits">
+      <div class="product-benefit">
+        <span>01</span>
+        <div>
+          <strong>Product guidance</strong>
+          <p>Ask our team about compatibility and specifications.</p>
+        </div>
+      </div>
+
+      <div class="product-benefit">
+        <span>02</span>
+        <div>
+          <strong>Order confirmation</strong>
+          <p>Confirm availability and final pricing before payment.</p>
+        </div>
+      </div>
+
+      <div class="product-benefit">
+        <span>03</span>
+        <div>
+          <strong>Installation support</strong>
+          <p>Ask about setup and installation where available.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="related-products-section">
+      <div class="product-details-container">
+        <div class="related-heading">
+          <div>
+            <div class="eyebrow"><span></span> KEEP EXPLORING</div>
+            <h2>Related <em>products.</em></h2>
+          </div>
+
+          <a href="index.html#catalogue">View all products ↗</a>
+        </div>
+
+        <div class="related-products-grid" id="relatedProducts"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> Zion Technologie. All rights reserved.</span>
+      <span>CONNECT. PROTECT. ENJOY. ✳</span>
+    </div>
+  </footer>
+
+  <div class="product-toast" id="productToast" role="status" aria-live="polite"></div>
+
+</body>
+</html>

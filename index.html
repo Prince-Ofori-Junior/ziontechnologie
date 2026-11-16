@@ -1,22 +1,15 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-GH">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101d2b">
-
-  <meta name="description" content="Shop networking equipment, routers, CCTV cameras, televisions, satellite equipment and accessories in Ghana. Request professional installation and technical support from Zion Technologie.">
-
-  <meta name="keywords" content="routers Ghana, CCTV cameras Ghana, DSTV installation Accra, networking equipment Ghana, Wi-Fi routers, television accessories, security systems Ghana">
-
-  <meta name="author" content="Zion Technologie">
-
-  <title>Zion Technologie | Networking, Security & Smart Technology in Ghana</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071827">
+  <meta name="description" content="Shop networking equipment, CCTV, smart technology and professional installation services from Zion Technologie in Ghana.">
+  <title>Zion Technologie — Smart technology, made practical</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
@@ -25,879 +18,344 @@
 
 <body>
 
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="container topbar-inner">
-      <span>
-        <i class="live-dot"></i>
-        TECH THAT WORKS FOR YOU
-      </span>
-
-      <span>
-        Accra, Ghana <b>·</b> Nationwide enquiries welcome
-      </span>
-    </div>
+  <div class="announcement">
+    <span class="pulse"></span>
+    SMART TECHNOLOGY. PRACTICAL SOLUTIONS.
+    <span class="announce-right">Accra, Ghana · Nationwide enquiries</span>
   </div>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-wrap">
+  <header class="site-header">
+
+    <!-- TOP ROW: LOGO, SEARCH AND CART -->
+    <div class="header-top">
 
       <a class="brand" href="#home" aria-label="Zion Technologie home">
-        <span class="brand-symbol">
-          <i></i>
-          <i></i>
-          <i></i>
-        </span>
-
-        <span class="brand-word">
-          Zion Technologie
-          <small>GHANA · SMART TECH STORE</small>
+        <span class="brand-mark"><i></i><i></i><i></i></span>
+        <span>
+          ZION <b>TECHNOLOGIE</b>
+          <small>CONNECT · PROTECT · ENJOY</small>
         </span>
       </a>
 
-      <button
-        class="menu-toggle"
-        id="menuToggle"
-        type="button"
-        aria-label="Toggle navigation"
-        aria-expanded="false"
-        aria-controls="mainNav"
-      >
-        <span></span>
-        <span></span>
-      </button>
+      <div class="header-search-wrap" id="headerSearchWrap">
+        <form class="header-search" id="headerSearchForm">
+          <input
+            type="search"
+            id="headerSearchInput"
+            placeholder="Search products, routers, CCTV..."
+            autocomplete="off"
+          >
+          <button type="submit" aria-label="Search">⌕</button>
+        </form>
 
-      <nav class="nav" id="mainNav">
-        <a href="#home" class="active">Home</a>
-        <a href="#shop">Shop</a>
-        <a href="#services">Services</a>
-        <a href="#why-us">Why Zion</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <div class="nav-actions">
-
-        <button
-          class="nav-icon"
-          id="searchTrigger"
-          type="button"
-          aria-label="Search products"
-        >
-          ⌕
-        </button>
-
-        <button
-          class="cart-trigger"
-          id="cartTrigger"
-          type="button"
-          aria-label="Open cart"
-        >
-          Cart <span id="cartCount">0</span>
-        </button>
-
-        <a class="nav-cta" href="#booking">
-          Book a technician <span>↗</span>
-        </a>
-
+        <div class="search-suggestions" id="searchSuggestions"></div>
       </div>
+
+      <div class="header-actions">
+        <button class="cart-button" id="cartOpen" aria-label="Open shopping cart">
+          <span class="cart-icon">🛒</span>
+          <span class="cart-label">Cart</span>
+          <span id="cartCount">0</span>
+        </button>
+
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+
     </div>
+
+    <!-- SECOND ROW: NAVIGATION -->
+    <div class="header-nav">
+      <nav id="navigation">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#catalogue" class="nav-link">Shop</a>
+        <a href="#solutions" class="nav-link">Solutions</a>
+        <a href="contact.html?type=booking" class="nav-link">Book a service</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+
   </header>
 
-  <main>
+  <main id="home">
 
-    <!-- HERO -->
-    <section class="hero" id="home">
+    <!-- HERO PRODUCT SHOWCASE -->
+    <section class="hero">
+      <div class="hero-visual">
 
-      <div class="hero-glow"></div>
+        <div class="hero-feature-box hero-slideshow">
 
-      <div class="container hero-layout">
+          <img
+            class="hero-slide active"
+            src="/images/banner2.jpg"
+            alt="Modern connected smart home">
 
-        <div class="hero-copy">
+          <img
+            class="hero-slide"
+            src="./images/banner5.jpg"
+            alt="CCTV security equipment">
 
-          <div class="eyebrow eyebrow-light">
+          <img
+            class="hero-slide"
+            src="./images/DoorPhone.jpg"
+            alt="Wireless networking equipment">
+
+          <img
+            class="hero-slide"
+            src="./images/cable(2).jpg"
+            alt="Smart television">
+
+          <div class="hero-box-overlay">
+            <span>01 / SMART TECHNOLOGY</span>
+            <h3>Connected<br>living.</h3>
+            <p>Technology for modern homes and businesses.</p>
+          </div>
+
+          <div class="hero-slide-indicators">
+            <span class="active"></span>
             <span></span>
-            YOUR GHANAIAN SMART-TECH PARTNER
-          </div>
-
-          <p class="hero-kicker">
-            CONNECT. PROTECT. ENTERTAIN.
-          </p>
-
-          <h1>
-            Technology that<br>
-            keeps your world<br>
-            <em>connected.</em>
-          </h1>
-
-          <p class="hero-text">
-            Shop networking equipment, CCTV systems, TVs, satellite
-            accessories and everyday tech. Get practical product guidance,
-            professional installation and technical support from one
-            local team.
-          </p>
-
-          <div class="hero-buttons">
-            <a class="btn btn-primary" href="#shop">
-              Explore the store <b>↗</b>
-            </a>
-
-            <a class="btn btn-outline" href="#services">
-              Explore services <span>→</span>
-            </a>
-          </div>
-
-          <div class="hero-notes">
-            <span>✓ Practical product guidance</span>
-            <span>✓ Installation enquiries</span>
-            <span>✓ Ghana-based support</span>
+            <span></span>
+            <span></span>
           </div>
 
         </div>
 
-        <div class="hero-art">
+        <div class="hero-small-grid">
 
-          <div class="hero-photo">
-            <img
-              src="https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=1200&q=85"
-              alt="Modern smart home technology and security"
-            >
-          </div>
-
-          <div class="hero-tag tag-top">
-            <span class="tag-icon">⌁</span>
-            <div>
-              <small>SMARTER SPACES</small>
-              <strong>Home · Office · Business</strong>
+          <div class="hero-small-box">
+            <img src="./images/grid1.jpg" alt="Wi-Fi router">
+            <div class="small-box-overlay">
+              <span>02</span>
+              <h3>Connectivity</h3>
             </div>
           </div>
 
-          <div class="hero-tag tag-bottom">
-            <span class="tag-check">✓</span>
-            <div>
-              <small>LOCAL SUPPORT</small>
-              <strong>Products + installation</strong>
+          <div class="hero-small-box">
+            <img src="./images/grid2.jpg" alt="CCTV security system">
+            <div class="small-box-overlay">
+              <span>03</span>
+              <h3>Security</h3>
             </div>
           </div>
 
-          <div class="hero-stamp">
-            Zion Technologie
-            <br>
-            <small>GHANA</small>
+          <div class="hero-small-box">
+            <img src="./images/grid3.jpg" alt="Smart television">
+            <div class="small-box-overlay">
+              <span>04</span>
+              <h3>Entertainment</h3>
+            </div>
+          </div>
+
+          <div class="hero-small-box">
+            <img src="./images/grid4.jpg" alt="Wireless access point">
+            <div class="small-box-overlay">
+              <span>05</span>
+              <h3>Networking</h3>
+            </div>
           </div>
 
         </div>
       </div>
-
-      <div class="container hero-foot">
-        <span>BUILT AROUND REAL CUSTOMER NEEDS</span>
-        <span>SCROLL TO DISCOVER ↓</span>
-      </div>
-
     </section>
 
-    <!-- QUICK CATEGORIES -->
-    <section class="quick-cats">
-      <div class="container quick-grid">
-
-        <a href="#shop" data-category-link="Routers">
-          <span class="quick-icon">⌁</span>
-          <b>Routers & Wi-Fi</b>
-          <small>Stay connected</small>
-        </a>
-
-        <a href="#shop" data-category-link="CCTV">
-          <span class="quick-icon">◉</span>
-          <b>CCTV & security</b>
-          <small>Protect your space</small>
-        </a>
-
-        <a href="#shop" data-category-link="DSTV">
-          <span class="quick-icon">◒</span>
-          <b>DSTV & antennas</b>
-          <small>Enjoy every signal</small>
-        </a>
-
-        <a href="#shop" data-category-link="TVs">
-          <span class="quick-icon">▣</span>
-          <b>TVs & entertainment</b>
-          <small>Enjoy more at home</small>
-        </a>
-
-        <a href="#shop" data-category-link="Accessories">
-          <span class="quick-icon">⌘</span>
-          <b>Tech accessories</b>
-          <small>Useful essentials</small>
-        </a>
-
+    <!-- TRUST STRIP -->
+    <section class="trust-strip">
+      <div class="container trust-grid">
+        <div><b>01</b><span>Smart connectivity</span></div>
+        <div><b>02</b><span>Security solutions</span></div>
+        <div><b>03</b><span>Home entertainment</span></div>
+        <div><b>04</b><span>Technical support</span></div>
       </div>
     </section>
 
-    <!-- CATEGORY SECTION -->
-    <section class="section categories" id="categories">
+    <!-- PRODUCT CATALOGUE -->
+    <section class="section" id="catalogue">
       <div class="container">
 
-        <div class="section-heading">
-
+        <div class="section-head">
           <div>
-            <div class="eyebrow">
-              <span></span>
-              SHOP BY CATEGORY
-            </div>
-
-            <h2>
-              Find the right tech<br>
-              <em>for your everyday.</em>
-            </h2>
+            <div class="eyebrow"><span></span> THE ZION STORE</div>
+            <h2>Technology for<br><em>everyday demands.</em></h2>
           </div>
 
           <p>
-            From better internet at home to dependable security for your
-            shop or office, explore practical equipment for the way Ghana
-            lives and works.
+            Explore our catalogue, compare options and build an order request.
+            Product availability and final prices are confirmed by our team
+            before payment.
           </p>
-
         </div>
 
-        <div class="category-grid">
-
-          <a class="category-card" href="#shop" data-category-link="Routers">
-            <img
-              src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?auto=format&fit=crop&w=900&q=85"
-              alt="Wireless internet router"
-              loading="lazy"
-            >
-            <span class="cat-shade"></span>
-            <small>01 / CONNECTIVITY</small>
-            <div>
-              <h3>Routers &<br>Wi-Fi devices</h3>
-              <b>Shop routers ↗</b>
-            </div>
-          </a>
-
-          <a class="category-card" href="#shop" data-category-link="CCTV">
-            <img
-              src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=900&q=85"
-              alt="CCTV surveillance camera"
-              loading="lazy"
-            >
-            <span class="cat-shade"></span>
-            <small>02 / SECURITY</small>
-            <div>
-              <h3>CCTV &<br>surveillance</h3>
-              <b>Shop security ↗</b>
-            </div>
-          </a>
-
-          <a class="category-card" href="#shop" data-category-link="TVs">
-            <img
-              src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=900&q=85"
-              alt="Flat screen television"
-              loading="lazy"
-            >
-            <span class="cat-shade"></span>
-            <small>03 / ENTERTAINMENT</small>
-            <div>
-              <h3>Televisions &<br>entertainment</h3>
-              <b>Shop TVs ↗</b>
-            </div>
-          </a>
-
-          <a class="category-card" href="#shop" data-category-link="DSTV">
-            <img
-              src="https://images.unsplash.com/photo-1601944179066-29786cb9d32a?auto=format&fit=crop&w=900&q=85"
-              alt="Satellite dish antenna"
-              loading="lazy"
-            >
-            <span class="cat-shade"></span>
-            <small>04 / SATELLITE</small>
-            <div>
-              <h3>DSTV dishes &<br>antennas</h3>
-              <b>Shop satellite ↗</b>
-            </div>
-          </a>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- SHOP -->
-    <section class="section shop" id="shop">
-      <div class="container">
-
-        <div class="section-heading shop-heading">
-
-          <div>
-            <div class="eyebrow">
-              <span></span>
-              ZION TECHNOLOGIE STORE
-            </div>
-
-            <h2>
-              Good gear.<br>
-              <em>Good value.</em>
-            </h2>
+        <div class="catalogue-toolbar">
+          <div class="catalogue-title">
+            <b>Explore products</b>
+            <span id="resultCount">Loading products…</span>
           </div>
 
-          <p>
-            Browse the sample catalogue, add products to your cart and
-            send your order request directly to our team on WhatsApp.
-          </p>
+          <div class="toolbar-controls">
+            <label class="search-field">
+              <span>⌕</span>
+              <input
+                id="productSearch"
+                type="search"
+                placeholder="Search products…">
+            </label>
 
-        </div>
-
-        <!-- SHOP FILTERS -->
-        <div class="shop-controls">
-
-          <div class="filters" id="filterList">
-            <button class="filter-chip active" type="button" data-filter="All">All products</button>
-            <button class="filter-chip" type="button" data-filter="Routers">Routers</button>
-            <button class="filter-chip" type="button" data-filter="CCTV">CCTV</button>
-            <button class="filter-chip" type="button" data-filter="Cameras">Cameras</button>
-            <button class="filter-chip" type="button" data-filter="DSTV">DSTV & antennas</button>
-            <button class="filter-chip" type="button" data-filter="TVs">TVs</button>
-            <button class="filter-chip" type="button" data-filter="Accessories">Accessories</button>
-          </div>
-
-          <label class="sort-label">
-            SORT
-            <select id="sortSelect">
+            <select id="sortProducts" aria-label="Sort products">
               <option value="featured">Featured</option>
               <option value="low">Price: low to high</option>
               <option value="high">Price: high to low</option>
               <option value="az">Name: A to Z</option>
             </select>
-          </label>
-
+          </div>
         </div>
 
-        <!-- PRODUCT GRID -->
-        <div class="product-grid" id="productGrid">
-
-          <!-- PRODUCT 1 -->
-          <article class="product-card" data-id="p1" data-category="Routers" data-price="650" data-name="4G LTE Wi-Fi Router">
-            <div class="product-image">
-              <span class="product-label">POPULAR PICK</span>
-              <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?auto=format&fit=crop&w=750&q=85" alt="4G LTE Wi-Fi router" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">ROUTERS & WI-FI</div>
-              <h3>4G LTE Wi-Fi Router</h3>
-              <p>SIM-enabled connectivity for homes and small offices.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 650.00</strong>
-                <button class="add-cart" type="button" data-id="p1">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 2 -->
-          <article class="product-card" data-id="p2" data-category="CCTV" data-price="1250" data-name="4-Channel CCTV Camera Kit">
-            <div class="product-image">
-              <span class="product-label">SECURITY KIT</span>
-              <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=750&q=85" alt="CCTV security camera" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">CCTV & SECURITY</div>
-              <h3>4-Channel CCTV Camera Kit</h3>
-              <p>Starter surveillance package for homes and shops.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 1,250.00</strong>
-                <button class="add-cart" type="button" data-id="p2">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 3 -->
-          <article class="product-card" data-id="p3" data-category="Cameras" data-price="480" data-name="Indoor Wi-Fi Security Camera">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1589935447067-5531094415d1?auto=format&fit=crop&w=750&q=85" alt="Indoor home security camera" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">SMART CAMERAS</div>
-              <h3>Indoor Wi-Fi Security Camera</h3>
-              <p>Remote viewing and motion alerts on supported models.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 480.00</strong>
-                <button class="add-cart" type="button" data-id="p3">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 4 -->
-          <article class="product-card" data-id="p4" data-category="DSTV" data-price="350" data-name="Satellite Dish & LNB Set">
-            <div class="product-image">
-              <span class="product-label">INSTALLATION AVAILABLE</span>
-              <img src="https://images.unsplash.com/photo-1601944179066-29786cb9d32a?auto=format&fit=crop&w=750&q=85" alt="Satellite dish antenna" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">DSTV & SATELLITE</div>
-              <h3>Satellite Dish & LNB Set</h3>
-              <p>Dish and LNB options for satellite TV setup.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 350.00</strong>
-                <button class="add-cart" type="button" data-id="p4">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 5 -->
-          <article class="product-card" data-id="p5" data-category="TVs" data-price="2450" data-name="32-inch Smart LED TV">
-            <div class="product-image">
-              <span class="product-label">HOME ENTERTAINMENT</span>
-              <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=750&q=85" alt="Modern flat screen smart television" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">TELEVISIONS</div>
-              <h3>32-inch Smart LED TV</h3>
-              <p>Compact smart entertainment for bedrooms and offices.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 2,450.00</strong>
-                <button class="add-cart" type="button" data-id="p5">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 6 -->
-          <article class="product-card" data-id="p6" data-category="Accessories" data-price="95" data-name="64GB USB Flash Drive">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1618410320928-25228d811631?auto=format&fit=crop&w=750&q=85" alt="USB flash drive" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">STORAGE & ACCESSORIES</div>
-              <h3>64GB USB Flash Drive</h3>
-              <p>Portable storage for documents, photos and files.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 95.00</strong>
-                <button class="add-cart" type="button" data-id="p6">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 7 -->
-          <article class="product-card" data-id="p7" data-category="DSTV" data-price="280" data-name="Outdoor TV Antenna">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=750&q=85" alt="Outdoor antenna equipment" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">ANTENNAS</div>
-              <h3>Outdoor TV Antenna</h3>
-              <p>Reception options for compatible local TV broadcasts.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 280.00</strong>
-                <button class="add-cart" type="button" data-id="p7">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 8 -->
-          <article class="product-card" data-id="p8" data-category="CCTV" data-price="780" data-name="8-Channel DVR Recorder">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=750&q=85" alt="Security and surveillance system" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">CCTV & SECURITY</div>
-              <h3>8-Channel DVR Recorder</h3>
-              <p>Recorder option for compatible analogue camera systems.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 780.00</strong>
-                <button class="add-cart" type="button" data-id="p8">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 9 -->
-          <article class="product-card" data-id="p9" data-category="Routers" data-price="520" data-name="Dual-Band Wi-Fi Router">
-            <div class="product-image">
-              <span class="product-label">HOME NETWORKING</span>
-              <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?auto=format&fit=crop&w=750&q=85" alt="Dual-band wireless router" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">ROUTERS & WI-FI</div>
-              <h3>Dual-Band Wi-Fi Router</h3>
-              <p>Reliable wireless connectivity for homes and small offices.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 520.00</strong>
-                <button class="add-cart" type="button" data-id="p9">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 10 -->
-          <article class="product-card" data-id="p10" data-category="CCTV" data-price="950" data-name="Outdoor IP CCTV Camera">
-            <div class="product-image">
-              <span class="product-label">OUTDOOR SECURITY</span>
-              <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=750&q=85" alt="Outdoor surveillance camera" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">CCTV & SECURITY</div>
-              <h3>Outdoor IP CCTV Camera</h3>
-              <p>Network camera option for entrances and outdoor areas.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 950.00</strong>
-                <button class="add-cart" type="button" data-id="p10">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 11 -->
-          <article class="product-card" data-id="p11" data-category="Accessories" data-price="180" data-name="Cat6 Ethernet Cable">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=750&q=85" alt="Ethernet network cable" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">NETWORK ACCESSORIES</div>
-              <h3>Cat6 Ethernet Cable</h3>
-              <p>Wired network connection for routers and compatible devices.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 180.00</strong>
-                <button class="add-cart" type="button" data-id="p11">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 12 -->
-          <article class="product-card" data-id="p12" data-category="Accessories" data-price="420" data-name="8-Port Network Switch">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=750&q=85" alt="Network electronics components" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">NETWORK EQUIPMENT</div>
-              <h3>8-Port Network Switch</h3>
-              <p>Expand wired connections for a small office or home network.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 420.00</strong>
-                <button class="add-cart" type="button" data-id="p12">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 13 -->
-          <article class="product-card" data-id="p13" data-category="Routers" data-price="680" data-name="Wireless Access Point">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=750&q=85" alt="Office networking technology" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">WI-FI EQUIPMENT</div>
-              <h3>Wireless Access Point</h3>
-              <p>Extend wireless coverage in offices and larger indoor spaces.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 680.00</strong>
-                <button class="add-cart" type="button" data-id="p13">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 14 -->
-          <article class="product-card" data-id="p14" data-category="Accessories" data-price="390" data-name="Universal TV Wall Mount">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=750&q=85" alt="Television wall mounting accessory" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">TV ACCESSORIES</div>
-              <h3>Universal TV Wall Mount</h3>
-              <p>Mounting accessory for compatible flat-screen televisions.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 390.00</strong>
-                <button class="add-cart" type="button" data-id="p14">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 15 -->
-          <article class="product-card" data-id="p15" data-category="Accessories" data-price="550" data-name="Network UPS Backup">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=750&q=85" alt="Technical power equipment" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">POWER & PROTECTION</div>
-              <h3>Network UPS Backup</h3>
-              <p>Backup power option for compatible networking equipment.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 550.00</strong>
-                <button class="add-cart" type="button" data-id="p15">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
-          <!-- PRODUCT 16 -->
-          <article class="product-card" data-id="p16" data-category="Accessories" data-price="120" data-name="HDMI High-Speed Cable">
-            <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1618410320928-25228d811631?auto=format&fit=crop&w=750&q=85" alt="HDMI connectivity cable" loading="lazy">
-            </div>
-            <div class="product-info">
-              <div class="product-type">TV & CONNECTIVITY</div>
-              <h3>HDMI High-Speed Cable</h3>
-              <p>Connect compatible TVs, monitors, decoders and media devices.</p>
-              <div class="product-bottom">
-                <strong>GH₵ 120.00</strong>
-                <button class="add-cart" type="button" data-id="p16">Add to cart <span>＋</span></button>
-              </div>
-            </div>
-          </article>
-
+        <div class="filter-row" id="filters">
+          <button class="filter active" data-filter="All">All products</button>
+          <button class="filter" data-filter="Routers">Routers & Wi-Fi</button>
+          <button class="filter" data-filter="CCTV">CCTV</button>
+          <button class="filter" data-filter="Cameras">Cameras</button>
+          <button class="filter" data-filter="DSTV">DSTV & antennas</button>
+          <button class="filter" data-filter="TVs">Televisions</button>
+          <button class="filter" data-filter="Accessories">Accessories</button>
         </div>
 
-        <p class="catalogue-disclaimer">
-          Catalogue prices and images are illustrative until replaced with
-          confirmed stock, supplier images and current selling prices.
-          Availability, warranty and delivery fees must be confirmed before
-          payment.
-        </p>
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+
+        <div class="catalogue-note">
+          <span>ⓘ</span>
+          Catalogue prices and images are illustrative until confirmed.
+          Stock, warranty, delivery and installation charges must be verified
+          before payment.
+        </div>
 
       </div>
     </section>
 
-    <!-- SERVICE INTRO -->
-    <section class="service-intro" id="services">
-      <div class="container service-intro-grid">
-
+    <!-- SOLUTIONS -->
+    <section class="feature-band" id="solutions">
+      <div class="container feature-layout">
         <div>
-          <div class="eyebrow eyebrow-light">
-            <span></span>
-            MORE THAN A SHOP
-          </div>
-
-          <h2>
-            We bring the<br>
-            <em>solution to you.</em>
-          </h2>
+          <div class="eyebrow light"><span></span> BEYOND THE PRODUCT</div>
+          <h2>Equipment is only<br>the <em>beginning.</em></h2>
         </div>
 
         <p>
-          Need someone to install, configure or troubleshoot your equipment?
-          Request a service and tell us your location. Our team will contact
-          you to confirm the scope, price and appointment.
+          Get support with installation, configuration and troubleshooting.
+          Tell us what you need and where you are — our team will follow up
+          to discuss the scope and quotation.
         </p>
 
+        <a class="button primary" href="contact.html?type=request">
+          Request a technician ↗
+        </a>
       </div>
     </section>
 
-    <!-- SERVICE CARDS -->
-    <section class="section services-section">
+    <!-- SERVICES -->
+    <section class="section services">
       <div class="container">
 
-        <div class="service-cards">
-
-          <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=900&q=85" alt="CCTV camera installation" loading="lazy">
-            <div class="service-card-body">
-              <span>01 / SECURITY</span>
-              <h3>CCTV installation</h3>
-              <p>Camera placement, cabling, recorder setup and remote-view configuration.</p>
-              <a href="#booking" data-service="CCTV installation">Book this service ↗</a>
-            </div>
-          </article>
-
-          <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1601944179066-29786cb9d32a?auto=format&fit=crop&w=900&q=85" alt="Satellite dish installation" loading="lazy">
-            <div class="service-card-body">
-              <span>02 / SATELLITE TV</span>
-              <h3>DSTV dish installation</h3>
-              <p>Dish mounting, alignment, signal checks and decoder setup assistance.</p>
-              <a href="#booking" data-service="DSTV dish installation">Book this service ↗</a>
-            </div>
-          </article>
-
-          <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?auto=format&fit=crop&w=900&q=85" alt="Router and Wi-Fi setup" loading="lazy">
-            <div class="service-card-body">
-              <span>03 / CONNECTIVITY</span>
-              <h3>Router & Wi-Fi setup</h3>
-              <p>Router configuration, Wi-Fi coverage improvement and network setup.</p>
-              <a href="#booking" data-service="Router and Wi-Fi setup">Book this service ↗</a>
-            </div>
-          </article>
-
-          <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=900&q=85" alt="Television wall mounting" loading="lazy">
-            <div class="service-card-body">
-              <span>04 / ENTERTAINMENT</span>
-              <h3>TV mounting & setup</h3>
-              <p>Wall mounting, cable management and device connection assistance.</p>
-              <a href="#booking" data-service="TV mounting and setup">Book this service ↗</a>
-            </div>
-          </article>
-
-          <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=900&q=85" alt="Technician troubleshooting electronics" loading="lazy">
-            <div class="service-card-body">
-              <span>05 / TECH SUPPORT</span>
-              <h3>Technical troubleshooting</h3>
-              <p>Diagnosis for connectivity, signal, camera and device setup issues.</p>
-              <a href="#booking" data-service="Technical troubleshooting">Book this service ↗</a>
-            </div>
-          </article>
-
-          <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1551703599-6b3e8379aa8d?auto=format&fit=crop&w=900&q=85" alt="Structured network cabling" loading="lazy">
-            <div class="service-card-body">
-              <span>06 / BUSINESS</span>
-              <h3>Network cabling</h3>
-              <p>Structured cabling and small-office network deployment enquiries.</p>
-              <a href="#booking" data-service="Network cabling">Book this service ↗</a>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- BOOKING -->
-    <section class="booking-section" id="booking">
-      <div class="container booking-layout">
-
-        <div class="booking-copy">
-
-          <div class="eyebrow eyebrow-light">
-            <span></span>
-            BOOK A SERVICE
+        <div class="section-head">
+          <div>
+            <div class="eyebrow"><span></span> OUR SERVICES</div>
+            <h2>Make your setup<br><em>work smarter.</em></h2>
           </div>
-
-          <h2>
-            Let's get it<br>
-            <em>sorted.</em>
-          </h2>
 
           <p>
-            Complete the request form. WhatsApp will open with your details
-            so our team can confirm the appointment and quotation.
+            Practical technical services for homes, shops and small businesses.
+            Select a service to prefill the request form.
           </p>
-
-          <div class="booking-points">
-            <span>✓ No online payment required</span>
-            <span>✓ Appointment confirmed by our team</span>
-            <span>✓ Service area and transport fee confirmed first</span>
-          </div>
-
         </div>
 
-        <form class="booking-form" id="bookingForm">
+        <div class="service-grid">
 
-          <div class="form-heading">
-            <span>REQUEST A VISIT</span>
-            <small>Fields marked * are required</small>
-          </div>
+          <article class="service-card">
+            <div class="service-number">01 / SECURITY</div>
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="7" width="13" height="10" rx="2"/>
+                <path d="m16 10 5-3v10l-5-3M7 17v3m5-3v3M5 20h9"/>
+              </svg>
+            </div>
+            <h3>CCTV installation</h3>
+            <p>Camera positioning, cabling, recorder setup and remote-view configuration.</p>
+            <a class="service-request-link" href="contact.html?type=request&service=CCTV%20installation">Request service ↗</a>
+          </article>
 
-          <div class="form-row">
+          <article class="service-card">
+            <div class="service-number">02 / CONNECTIVITY</div>
+            <div class="service-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2 9a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0m-11 3a5 5 0 0 1 8 0"/>
+                <circle cx="12" cy="18" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>Router & Wi-Fi setup</h3>
+            <p>Router configuration, coverage improvement and small-network setup.</p>
+            <a class="service-request-link" href="contact.html?type=request&service=Router%20and%20Wi-Fi%20setup">Request service ↗</a>
+          </article>
 
-            <label for="customerName">
-              Full name *
-              <input
-                id="customerName"
-                name="name"
-                type="text"
-                required
-                placeholder="Your full name"
-                autocomplete="name"
-              >
-            </label>
+          <article class="service-card">
+            <div class="service-number">03 / SATELLITE TV</div>
+            <div class="service-icon">◒</div>
+            <h3>DSTV installation</h3>
+            <p>Dish mounting, alignment, signal checks and decoder setup assistance.</p>
+            <a class="service-request-link" href="contact.html?type=request&service=DSTV%20dish%20installation">Request service ↗</a>
+          </article>
 
-            <label for="customerPhone">
-              Phone number *
-              <input
-                id="customerPhone"
-                name="phone"
-                type="tel"
-                required
-                placeholder="e.g. 024 000 0000"
-                autocomplete="tel"
-              >
-            </label>
+          <article class="service-card">
+            <div class="service-number">04 / ENTERTAINMENT</div>
+            <div class="service-icon">▣</div>
+            <h3>TV mounting & setup</h3>
+            <p>Wall mounting, cable management and device connection support.</p>
+            <a class="service-request-link" href="contact.html?type=request&service=TV%20mounting%20and%20setup">Request service ↗</a>
+          </article>
 
-          </div>
+          <article class="service-card">
+            <div class="service-number">05 / BUSINESS</div>
+            <div class="service-icon">⌘</div>
+            <h3>Network cabling</h3>
+            <p>Structured cabling and wired network deployment enquiries.</p>
+            <a class="service-request-link" href="contact.html?type=request&service=Network%20cabling">Request service ↗</a>
+          </article>
 
-          <label for="serviceSelect">
-            Service required *
-            <select name="service" id="serviceSelect" required>
-              <option value="">Choose a service</option>
-              <option value="CCTV installation">CCTV installation</option>
-              <option value="DSTV dish installation">DSTV dish installation</option>
-              <option value="Router and Wi-Fi setup">Router and Wi-Fi setup</option>
-              <option value="TV mounting and setup">TV mounting and setup</option>
-              <option value="Technical troubleshooting">Technical troubleshooting</option>
-              <option value="Network cabling">Network cabling</option>
-              <option value="Other / not sure">Other / not sure</option>
-            </select>
-          </label>
+          <article class="service-card">
+            <div class="service-number">06 / SUPPORT</div>
+            <div class="service-icon">＋</div>
+            <h3>Technical troubleshooting</h3>
+            <p>Diagnosis for connectivity, signal, camera and device setup issues.</p>
+            <a class="service-request-link" href="contact.html?type=request&service=Technical%20troubleshooting">Request service ↗</a>
+          </article>
 
-          <div class="form-row">
-
-            <label for="customerLocation">
-              Town / area *
-              <input
-                id="customerLocation"
-                name="location"
-                type="text"
-                required
-                placeholder="e.g. Madina, Accra"
-              >
-            </label>
-
-            <label for="bookingDate">
-              Preferred date
-              <input
-                id="bookingDate"
-                name="date"
-                type="date"
-              >
-            </label>
-
-          </div>
-
-          <label for="bookingDetails">
-            Tell us what you need
-            <textarea
-              id="bookingDetails"
-              name="details"
-              rows="3"
-              placeholder="Describe the job, number of cameras, device model, etc."
-            ></textarea>
-          </label>
-
-          <button class="btn btn-primary form-submit" type="submit">
-            Send booking request on WhatsApp ↗
-          </button>
-
-          <small class="form-note">
-            Submitting opens WhatsApp. It does not automatically confirm a booking.
-          </small>
-
-        </form>
-
+        </div>
       </div>
     </section>
 
-    <!-- WHY ZION -->
-    <section class="section why-section" id="why-us">
-      <div class="container why-layout">
+    <!-- ABOUT -->
+    <section class="section about" id="about">
+      <div class="container about-layout">
 
         <div>
-
-          <div class="eyebrow">
-            <span></span>
-            THE ZION DIFFERENCE
-          </div>
-
-          <h2>
-            Local knowledge.<br>
-            <em>Practical solutions.</em>
-          </h2>
+          <div class="eyebrow"><span></span> WHY ZION TECHNOLOGIE</div>
+          <h2>Local knowledge.<br><em>Dependable guidance.</em></h2>
 
           <p>
-            We help customers choose equipment that fits the job, the space
-            and the budget, with installation support available where agreed.
+            We help customers identify equipment that suits the job,
+            the space and the budget — with installation support available
+            where agreed.
           </p>
-
         </div>
 
-        <div class="why-points">
-
+        <div class="about-points">
           <div>
             <b>01</b>
             <span>
               <strong>Advice before you buy</strong>
-              <small>Get help choosing compatible equipment.</small>
+              <small>Understand compatibility and choose equipment for your needs.</small>
             </span>
           </div>
 
@@ -905,68 +363,50 @@
             <b>02</b>
             <span>
               <strong>Products and services together</strong>
-              <small>Buy the equipment and ask us to set it up.</small>
+              <small>Get the equipment and ask about professional setup.</small>
             </span>
           </div>
 
           <div>
             <b>03</b>
             <span>
-              <strong>Ghana-focused support</strong>
+              <strong>Ghana-focused assistance</strong>
               <small>Accra-based enquiries with nationwide requests welcome.</small>
             </span>
           </div>
-
         </div>
+
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="contact-band" id="contact">
+    <section class="contact-cta">
       <div class="container contact-layout">
 
         <div>
-
-          <div class="eyebrow eyebrow-light">
-            <span></span>
-            NEED A HAND?
-          </div>
-
-          <h2>
-            Not sure what<br>
-            you need yet?
-          </h2>
-
+          <div class="eyebrow light"><span></span> TALK TO OUR TEAM</div>
+          <h2>Not sure where<br>to <em>start?</em></h2>
           <p>
-            Tell us your budget, location or the problem you want to solve.
-            We'll help you identify the next step.
+            Tell us your budget, location or the technology challenge
+            you want to solve.
           </p>
-
         </div>
 
-        <div class="contact-actions">
+        <div class="contact-links">
 
-          <a
-            class="btn btn-primary"
-            id="contactWhatsapp"
-            href="#"
-            target="_blank"
-            rel="noopener"
-          >
-            Chat with Zion on WhatsApp ↗
+          <a class="button primary" href="contact.html">
+            Contact us ↗
           </a>
 
-          <a
-            class="btn btn-outline"
-            id="contactEmail"
-            href="mailto:hello@ziontechnologies.com"
-          >
-            Email the team ↗
+          <a class="button ghost" href="contact.html?type=request">
+            Request a service ↗
           </a>
 
-          <small>
-            Confirm the WhatsApp number and email in script.js before publishing.
-          </small>
+          <a class="button ghost" href="contact.html?type=booking">
+            Book a service ↗
+          </a>
+
+          <small>Call or WhatsApp: +233 59 585 6187</small>
 
         </div>
 
@@ -976,22 +416,15 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="footer">
-
+  <footer>
     <div class="container footer-main">
 
       <div class="footer-brand">
-
         <a class="brand" href="#home">
-          <span class="brand-symbol">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
-
-          <span class="brand-word">
-            Zion Technologie
-            <small>GHANA · SMART TECH STORE</small>
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span>
+            ZION <b>TECHNOLOGIE</b>
+            <small>CONNECT · PROTECT · ENJOY</small>
           </span>
         </a>
 
@@ -999,147 +432,153 @@
           Smart technology, security and connectivity products with
           practical installation support in Ghana.
         </p>
-
       </div>
 
       <div>
-        <h4>Shop</h4>
-        <a href="#shop">Routers & Wi-Fi</a>
-        <a href="#shop">CCTV & cameras</a>
-        <a href="#shop">TVs & DSTV</a>
-        <a href="#shop">Accessories</a>
+        <b>Explore</b>
+        <a href="#catalogue">Shop products</a>
+        <a href="#solutions">Solutions</a>
+        <a href="contact.html?type=booking">Book a technician</a>
+        <a href="contact.html">Contact us</a>
       </div>
 
       <div>
-        <h4>Services</h4>
-        <a href="#services">CCTV installation</a>
-        <a href="#services">DSTV installation</a>
-        <a href="#services">Router setup</a>
-        <a href="#booking">Book a technician</a>
+        <b>Categories</b>
+        <a href="#catalogue">Routers & Wi-Fi</a>
+        <a href="#catalogue">CCTV & cameras</a>
+        <a href="#catalogue">TVs & satellite</a>
       </div>
 
       <div>
-        <h4>Contact</h4>
-        <p>Accra, Ghana</p>
-        <p>Nationwide enquiries welcome</p>
-        <a id="footerEmail" href="mailto:hello@ziontechnologies.com">
-          hello@ziontechnologies.com
-        </a>
+        <b>Contact</b>
+        <span>Accra, Ghana</span>
+        <span>Nationwide enquiries</span>
+        <a href="tel:+233595856187">+233 59 585 6187</a>
+        <a href="mailto:hello@ziontechnologies.com">hello@ziontechnologies.com</a>
+        <a href="contact.html">Contact page ↗</a>
       </div>
 
     </div>
 
     <div class="container footer-bottom">
-      <span>
-        © <span id="year"></span> Zion Technologie. All rights reserved.
-      </span>
-
-      <span>
-        CONNECT. PROTECT. ENJOY. <b>✳</b>
-      </span>
+      <span>© <span id="year"></span> Zion Technologie. All rights reserved.</span>
+      <span>CONNECT. PROTECT. ENJOY. ✳</span>
     </div>
-
   </footer>
 
-  <!-- SEARCH PANEL -->
-  <div
-    class="search-panel"
-    id="searchPanel"
-    aria-hidden="true"
-  >
+  <!-- CART OVERLAY -->
+  <div class="overlay" id="overlay"></div>
 
-    <div class="search-box">
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <nav class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true" aria-label="Main navigation">
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+    <div class="mobile-nav-panel">
+      <div class="mobile-nav-header">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close navigation">×</button>
+        <a href="#home" class="mobile-brand">
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span>ZION <b>TECHNOLOGIE</b></span>
+        </a>
+      </div>
 
-      <input
-        type="search"
-        id="searchInput"
-        placeholder="Search routers, CCTV, TVs, DSTV..."
-        aria-label="Search products"
-      >
+      <div class="mobile-nav-search">
+        <form class="mobile-search-form">
+          <input type="search" placeholder="Search products…" aria-label="Search products">
+          <button type="submit">⌕</button>
+        </form>
+      </div>
 
-      <button
-        id="closeSearch"
-        type="button"
-        aria-label="Close search"
-      >
-        ×
-      </button>
+      <ul class="mobile-nav-list" role="menubar">
+        <li role="none"><a href="#home" class="mobile-nav-link" role="menuitem">Home</a></li>
+        <li role="none"><a href="#catalogue" class="mobile-nav-link" role="menuitem">Shop</a></li>
+        <li role="none"><a href="#solutions" class="mobile-nav-link" role="menuitem">Solutions</a></li>
+        <li role="none"><a href="contact.html?type=booking" class="mobile-nav-link" role="menuitem">Book a service</a></li>
+        <li role="none"><a href="#about" class="mobile-nav-link" role="menuitem">About</a></li>
+        <li role="none"><a href="contact.html" class="mobile-nav-link" role="menuitem">Contact</a></li>
+      </ul>
 
+      <div class="mobile-nav-divider"></div>
+
+      <div class="mobile-nav-contact">
+        <p class="mobile-nav-label">Get in touch</p>
+        <a href="tel:+233595856187" class="mobile-nav-contact-item">
+          <span>☎</span> +233 59 585 6187
+        </a>
+        <a href="mailto:hello@ziontechnologies.com" class="mobile-nav-contact-item">
+          <span>✉</span> hello@ziontechnologies.com
+        </a>
+        <a href="contact.html" class="mobile-nav-contact-item">
+          <span>↗</span> Contact page
+        </a>
+      </div>
+
+      <div class="mobile-nav-actions">
+        <button class="mobile-nav-btn primary" id="mobileCartOpen">
+          <span>🛒</span> View Cart <span id="mobileCartCount">0</span>
+        </button>
+        <a href="https://wa.me/233595856187" class="mobile-nav-btn secondary" target="_blank" rel="noopener">
+          <span>✳</span> Chat on WhatsApp
+        </a>
+      </div>
     </div>
+  </nav>
 
-    <p>Search the product catalogue by name or category.</p>
+  <!-- SHOPPING CART -->
+  <aside class="cart-drawer" id="cartDrawer"
+    aria-label="Shopping cart" aria-hidden="true">
 
-  </div>
-
-  <!-- CART BACKDROP -->
-  <div class="cart-backdrop" id="cartBackdrop"></div>
-
-  <!-- CART DRAWER -->
-  <aside
-    class="cart-drawer"
-    id="cartDrawer"
-    aria-label="Shopping cart"
-    aria-hidden="true"
-  >
-
-    <div class="cart-head">
-
+    <div class="drawer-head">
       <div>
-        <span>YOUR SELECTION</span>
-        <h3>Shopping cart</h3>
+        <small>YOUR SELECTION</small>
+        <h3>Shopping cart <span id="drawerCount">0</span></h3>
       </div>
-
-      <button
-        id="closeCart"
-        type="button"
-        aria-label="Close cart"
-      >
-        ×
-      </button>
-
+      <button class="close-btn" id="cartClose" aria-label="Close cart">×</button>
     </div>
 
-    <div class="cart-items" id="cartItems">
+    <div class="cart-items" id="cartItems"></div>
 
-      <div class="empty-cart">
-        <span>＋</span>
-        <h4>Your cart is empty</h4>
-        <p>Add equipment to start your order.</p>
-      </div>
-
-    </div>
-
-    <div class="cart-footer">
-
-      <div class="cart-total">
+    <div class="cart-bottom">
+      <div class="subtotal">
         <span>Estimated subtotal</span>
-        <strong id="cartTotal">GH₵ 0.00</strong>
+        <b id="cartTotal">GH₵ 0.00</b>
       </div>
 
       <p>
-        Delivery, installation and final stock availability are
-        confirmed by our team.
+        Delivery, installation and stock availability are confirmed by our team.
       </p>
 
-      <button
-        class="checkout-btn"
-        id="checkoutBtn"
-        type="button"
-      >
-        Send order on WhatsApp ↗
+      <button class="button primary checkout" id="checkout">
+        Continue on WhatsApp ↗
       </button>
 
+      <a class="button checkout-call" href="tel:+233595856187">
+        ☎ Call to Order
+      </a>
     </div>
-
   </aside>
 
-  <!-- TOAST NOTIFICATION -->
-  <div
-    class="toast"
-    id="toast"
-    role="status"
-    aria-live="polite"
-  ></div>
+  <!-- SEARCH MODAL -->
+  <div class="search-modal" id="searchModal" aria-hidden="true">
+    <div class="search-modal-box">
+      <button class="close-btn" id="searchClose" aria-label="Close search">×</button>
+
+      <div class="eyebrow"><span></span> FIND YOUR TECH</div>
+      <h3>What are you looking for?</h3>
+
+      <input id="modalSearch" type="search"
+        placeholder="Search routers, CCTV, cables…">
+
+      <p>Search the catalogue by product name or category.</p>
+    </div>
+  </div>
+
+  <!-- QUICK VIEW -->
+  <div class="quick-view" id="quickView" aria-hidden="true">
+    <div class="quick-view-box" id="quickViewContent"></div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 </body>
 </html>
